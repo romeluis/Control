@@ -9,10 +9,12 @@ import SwiftUI
 public struct ControlToggle: View {
     var title: String = ""
     @Binding var input: Bool
-    
+
     var activatedText: String = "On"
     var deactivatedText: String = "Off"
-    var backgroundColour: Color = Color("UI White")
+    var textColour: Color = .accentColor
+    var containerColour: Color = Color("UI White")
+    var outlineColour: Color = .clear
     
     public var body: some View {
         VStack (alignment: .leading, spacing: 5) {
@@ -28,6 +30,7 @@ public struct ControlToggle: View {
                 //On/off text
                 Text(input ? activatedText : deactivatedText)
                     .bodyText()
+                    .foregroundColor(textColour)
                     .id(input)
                     .transition(.opacity)
                     
@@ -40,7 +43,8 @@ public struct ControlToggle: View {
                     .padding(.vertical, -4)
             }
             .padding()
-            .backgroundFill(cornerRadius: 20, colour: backgroundColour)
+            .backgroundFill(cornerRadius: 20, colour: containerColour)
+            .backgroundStroke(cornerRadius: 20, colour: outlineColour)
             .animation(.spring(duration: 0.3), value: input)
         }
     }
