@@ -16,7 +16,8 @@ struct CustomText: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .font(Font.custom(bold ? "CreatoDisplay-Black" : "CreatoDisplay-Regular", size: size, relativeTo: relative))
+            .font(bold ? .system(size: size, weight: .black, design: .default).width(.standard) : 
+                        .system(size: size, weight: .regular, design: .default).width(.standard))
             .minimumScaleFactor(scaleFactor)
             .kerning(0.1)
     }

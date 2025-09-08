@@ -13,8 +13,26 @@ public struct ControlToggle: View {
     var activatedText: String = "On"
     var deactivatedText: String = "Off"
     var textColour: Color = .accentColor
-    var containerColour: Color = Color("UI White")
+    var containerColour: Color = .white
     var outlineColour: Color = .clear
+    
+    public init(
+        title: String = "",
+        input: Binding<Bool>,
+        activatedText: String = "On",
+        deactivatedText: String = "Off",
+        textColour: Color = .accentColor,
+        containerColour: Color = .white,
+        outlineColour: Color = .clear
+    ) {
+        self.title = title
+        self._input = input
+        self.activatedText = activatedText
+        self.deactivatedText = deactivatedText
+        self.textColour = textColour
+        self.containerColour = containerColour
+        self.outlineColour = outlineColour
+    }
     
     public var body: some View {
         VStack (alignment: .leading, spacing: 5) {
