@@ -23,7 +23,7 @@ struct ControlColour: View {
                     .padding(.leading, 7)
             }
             
-            HStack(spacing: 10) {
+            HStack(spacing: 5) {
                 ForEach(Color.Control.allCases, id: \.rawValue) { colour in
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color("\(colour.rawValue)", bundle: .module))

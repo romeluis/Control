@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ControlButtonLabel: View {
+public struct ControlButtonLabel: View {
     @Environment(\.isEnabled) var isEnabled
     
     var text: String?
@@ -22,7 +22,7 @@ struct ControlButtonLabel: View {
     var outlineColour: Color? = nil
     var textColour: Color? = nil
     
-    var backgroundColourCalculated: Color {
+    private var backgroundColourCalculated: Color {
         if let colour = backgroundColour {
             return colour
         }
@@ -42,13 +42,13 @@ struct ControlButtonLabel: View {
             return .clear
         }
     }
-    var outlineColourCalculated: Color {
+    private var outlineColourCalculated: Color {
         if let colour = outlineColour {
             return colour
         }
         return .clear
     }
-    var textColourCalculated: Color {
+    private var textColourCalculated: Color {
         if let colour = textColour {
             return colour
         }
@@ -154,7 +154,7 @@ struct ControlButtonLabel: View {
         }
     }
     
-    var body: some View {
+    public var body: some View {
         Group {
             switch type {
             case .toolbar:

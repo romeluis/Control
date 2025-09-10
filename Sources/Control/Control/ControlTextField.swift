@@ -34,9 +34,10 @@ public struct ControlTextField: View {
         input: Binding<String>,
         inputState: Binding<ControlInputState>,
         placeholderText: String = "",
-        errorMessage: String = "",
         showError: Bool = true,
         backgroundColour: Color = .Control.white,
+        outlineColour: Color = .clear,
+        textColour: Color = .accentColor,
         validationTrigger: Binding<Bool> = .constant(true),
         isValid: ((String) -> ControlInputState)? = nil
     ) {
@@ -46,6 +47,8 @@ public struct ControlTextField: View {
         self.placeholderText = placeholderText
         self.showError = showError
         self.backgroundColour = backgroundColour
+        self.outlineColour = outlineColour
+        self.textColour = textColour
         self._validationTrigger = validationTrigger
         self.isValid = isValid
     }
@@ -104,14 +107,14 @@ public struct ControlTextField: View {
     @Previewable @State var valid3: ControlInputState = .valid
     
     VStack {
-        ControlTextField(title: "Name", input: $text1, inputState: $valid1, placeholderText: "Computer Organization", errorMessage: "Name cannot be empty", validationTrigger: $update) { text in
+        ControlTextField(title: "Name", input: $text1, inputState: $valid1, placeholderText: "Computer Organization", validationTrigger: $update) { text in
             if text.isEmpty {
                 return .invalid(message: "No empty")
             }
             return .valid
         }
         
-        ControlTextField(input: $text3, inputState: $valid3, placeholderText: "Computer Organization", errorMessage: "Name cannot be empty", validationTrigger: $update) { text in
+        ControlTextField(input: $text3, inputState: $valid3, placeholderText: "Computer Organization", validationTrigger: $update) { text in
             if text.isEmpty {
                 return .invalid(message: "No empty")
             } else if text == "Test" {
