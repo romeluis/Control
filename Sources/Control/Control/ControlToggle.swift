@@ -13,7 +13,7 @@ public struct ControlToggle: View {
     var activatedText: String = "On"
     var deactivatedText: String = "Off"
     var textColour: Color = .accentColor
-    var containerColour: Color = .white
+    var containerColour: Color = .Control.white
     var outlineColour: Color = .clear
 
     public init(
@@ -22,7 +22,7 @@ public struct ControlToggle: View {
         activatedText: String = "On",
         deactivatedText: String = "Off",
         textColour: Color = .accentColor,
-        containerColour: Color = .white,
+        containerColour: Color = .Control.white,
         outlineColour: Color = .clear
     ) {
         self.title = title
@@ -68,7 +68,7 @@ public struct ControlToggle: View {
     }
 }
 
-#Preview {
+#Preview (traits: .controlPreview) {
     @Previewable @State var toggle: Bool = true
     
     ScrollView {

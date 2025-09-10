@@ -31,13 +31,13 @@ struct ControlButtonLabel: View {
         case .primary:
             return .accentColor
         case .secondary:
-            return .gray
+            return .Control.gray1
         case .accessory:
             return .clear
         case .mini:
             return .clear
         case .capsule:
-            return .white
+            return .Control.white
         case .toolbar:
             return .clear
         }
@@ -55,17 +55,17 @@ struct ControlButtonLabel: View {
         
         switch type {
         case .primary:
-            return .white
+            return .Control.white
         case .secondary:
-            return .black
+            return .Control.black
         case .accessory:
-            return .black
+            return .Control.black
         case .mini:
-            return .black
+            return .Control.black
         case .capsule:
-            return .black
+            return .Control.black
         case .toolbar:
-            return .black
+            return .Control.black
         }
     }
     
@@ -216,7 +216,7 @@ struct ControlButtonLabel: View {
                             RoundedRectangle(cornerRadius: 100)
                                 .fill(.ultraThinMaterial)
                         )
-                        .shadow(color: .black.opacity(0.2), radius: 20)
+                        .shadow(color: .Control.black.opacity(0.2), radius: 20)
                         .transition(.blurReplace)
                 }
             }
@@ -224,47 +224,47 @@ struct ControlButtonLabel: View {
     }
 }
 
-#Preview {
+#Preview (traits: .controlPreview){
     @Previewable @State var bool: Bool = false
     VStack {
-        ControlButton(text: "Hello", symbol: "heart.fill", type: .primary, symbolLocation: .leading, expandWidth: false) {
+        ControlButton(text: "Hello", symbol: "Question", type: .primary, symbolLocation: .leading, expandWidth: false) {
             
         }
-        ControlButton(symbol: "heart.fill", type: .primary, symbolLocation: .leading, expandWidth: false) {
-            
-        }
-        .disabled(bool)
-        ControlButton(text: "Hello", symbol: "heart.fill", type: .secondary, symbolLocation: .leading, expandWidth: false) {
-            
-        }
-        ControlButton(symbol: "heart.fill", type: .secondary, symbolLocation: .leading, expandWidth: false) {
+        ControlButton(symbol: "Question", type: .primary, symbolLocation: .leading, expandWidth: false) {
             
         }
         .disabled(bool)
-        ControlButton(text: "Hello", symbol: "heart.fill", type: .capsule, symbolLocation: .leading, expandWidth: false) {
+        ControlButton(text: "Hello", symbol: "Question", type: .secondary, symbolLocation: .leading, expandWidth: false) {
             
         }
-        ControlButton(symbol: "heart.fill", type: .capsule, symbolLocation: .leading, expandWidth: false) {
-            
-        }
-        .disabled(bool)
-        ControlButton(text: "Hello", symbol: "heart.fill", type: .accessory,  symbolLocation: .leading) {
-            
-        }
-        ControlButton(symbol: "heart.fill", type: .accessory,  symbolLocation: .leading) {
-            
-        }
-        ControlButton(text: "Hello", symbol: "heart.fill", type: .mini, symbolLocation: .leading, expandWidth: false) {
-            
-        }
-        ControlButton(symbol: "heart.fill", type: .mini, symbolLocation: .leading, expandWidth: false, outlineColour: .white) {
+        ControlButton(symbol: "Question", type: .secondary, symbolLocation: .leading, expandWidth: false) {
             
         }
         .disabled(bool)
-        ControlButton(text: "Hello", symbol: "heart.fill", type: .toolbar, symbolLocation: .trailing, expandWidth: false) {
+        ControlButton(text: "Hello", symbol: "Question", type: .capsule, symbolLocation: .leading, expandWidth: false) {
+            
+        }
+        ControlButton(symbol: "Question", type: .capsule, symbolLocation: .leading, expandWidth: false) {
+            
+        }
+        .disabled(bool)
+        ControlButton(text: "Hello", symbol: "Question", type: .accessory,  symbolLocation: .leading) {
+            
+        }
+        ControlButton(symbol: "Question", type: .accessory,  symbolLocation: .leading) {
+            
+        }
+        ControlButton(text: "Hello", symbol: "Question", type: .mini, symbolLocation: .leading, expandWidth: false) {
+            
+        }
+        ControlButton(symbol: "Question", type: .mini, symbolLocation: .leading, expandWidth: false, outlineColour: .Control.white) {
+            
+        }
+        .disabled(bool)
+        ControlButton(text: "Hello", symbol: "Question", type: .toolbar, symbolLocation: .trailing, expandWidth: false) {
             bool.toggle()
         }
-        ControlButton(text: "Hello", symbol: "heart.fill", type: .toolbar, symbolLocation: .trailing, expandWidth: false, backgroundColour: .accentColor, textColour: .white) {
+        ControlButton(text: "Hello", symbol: "Question", type: .toolbar, symbolLocation: .trailing, expandWidth: false, backgroundColour: .accentColor, textColour: .Control.white) {
             bool.toggle()
         }
         

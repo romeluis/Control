@@ -8,6 +8,7 @@
 // In your package target (e.g., DesignSystem)
 
 import SwiftUI
+import CoreText
 
 enum DSFontName: String, CaseIterable {
     case regular = "CreatoDisplay-Regular" // <- change to your PS names
@@ -33,18 +34,24 @@ public struct CreatoDisplay {
 
     fileprivate static func registerFont(bundle: Bundle, fontName: String, fontExtension: String) {
 
-        guard let fontURL = bundle.url(forResource: fontName, withExtension: fontExtension),
-              let fontDataProvider = CGDataProvider(url: fontURL as CFURL),
-              let font = CGFont(fontDataProvider) else {
-                  fatalError("Couldn't create font from data")
+        guard let fontURL = bundle.url(forResource: fontName, withExtension: fontExtension) else {
+            assertionFailure("Couldn't find font file \(fontName).\(fontExtension) in bundle \(bundle)")
+            return
         }
 
         var error: Unmanaged<CFError>?
 
-        CTFontManagerRegisterGraphicsFont(font, &error)
+            let success = CTFontManagerRegisterFontsForURL(fontURL as CFURL, .process, &error)
+            if !success {
+                #if DEBUG
+                if let e = error?.takeRetainedValue() {
+                    print("Font registration failed for \(fontURL.lastPathComponent): \(e)")
+                } else {
+                    print("Font registration failed for \(fontURL.lastPathComponent) with unknown error.")
+                }
+                #endif
+            }
     }
-    
-
 }
 
 struct CustomText: ViewModifier {

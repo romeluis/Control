@@ -61,7 +61,7 @@ struct ControlButton: View {
     }
 }
 
-#Preview {
+#Preview (traits: .controlPreview) {
     VStack {
         ControlButton(text: "Hello", symbol: "Check Mark", type: .primary, symbolLocation: .leading, expandWidth: false) {
             
