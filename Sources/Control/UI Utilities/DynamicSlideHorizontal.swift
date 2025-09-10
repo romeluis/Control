@@ -18,7 +18,6 @@ extension AnyTransition {
         }
     }
 
-    @MainActor
     static func dynamicSlideHorizontal(forward: Binding<Bool>) -> AnyTransition {
         return .asymmetric(
             insertion: .modifier(

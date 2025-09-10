@@ -7,12 +7,18 @@
 
 import SwiftUI
 
-struct Symbol: View {
+public struct Symbol: View {
     @State var symbol: String
     @State var size: CGFloat
     @State var colour: Color = Color(.label)
     
-    var body: some View {
+    public init(symbol: String, size: CGFloat, colour: Color = Color(.label)) {
+        self.symbol = symbol
+        self.size = size
+        self.colour = colour
+    }
+    
+    public var body: some View {
         Image(symbol + " Symbol", bundle: .module)
             .resizable()
             .aspectRatio(contentMode: .fit)

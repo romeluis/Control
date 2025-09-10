@@ -7,22 +7,32 @@
 import SwiftUI
 import SwiftData
 
-struct HorizontalDivider: View {
+public struct HorizontalDivider: View {
     var colour: Color
     var width: CGFloat = 2
     
-    var body: some View {
+    public init(colour: Color, width: CGFloat = 2) {
+        self.colour = colour
+        self.width = width
+    }
+    
+    public var body: some View {
         RoundedRectangle(cornerRadius: 30)
             .fill(colour)
             .frame(height: width)
     }
 }
 
-struct VerticalDivider: View {
+public struct VerticalDivider: View {
     var colour: Color
     var width: CGFloat = 2
     
-    var body: some View {
+    public init(colour: Color, width: CGFloat = 2) {
+        self.colour = colour
+        self.width = width
+    }
+    
+    public var body: some View {
         RoundedRectangle(cornerRadius: 30)
             .fill(colour)
             .frame(width: width)

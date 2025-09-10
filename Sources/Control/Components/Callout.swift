@@ -7,23 +7,31 @@
 import SwiftUI
 import SwiftData
 
-struct Callout: View {
+public struct Callout: View {
     var symbol: String
     var title: String
     var bodyText: String = ""
     
     var backgroundColour: Color = .Control.white
     var outlineColour: Color = .clear
+    
+    public init(symbol: String, title: String, bodyText: String = "", backgroundColour: Color = .Control.white, outlineColour: Color = .clear) {
+        self.symbol = symbol
+        self.title = title
+        self.bodyText = bodyText
+        self.backgroundColour = backgroundColour
+        self.outlineColour = outlineColour
+    }
 
-    var body: some View {
+    public var body: some View {
         HStack (alignment: .top) {
-            Symbol(symbolName: symbol, size: bodyText != "" ? 20 : 17)
+            Symbol(symbol: symbol, size: bodyText != "" ? 20 : 17)
                 .padding(.top, bodyText != "" ? 2 : 1)
             VStack (alignment: .leading, spacing: 7) {
                 Text(title)
                     .if(bodyText != "") { content in
                         content
-                            .headerText()
+                            //TODO: .headerText()
                     }
                     .if(bodyText == "") { content in
                         content
