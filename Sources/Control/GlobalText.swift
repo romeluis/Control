@@ -11,7 +11,7 @@ import SwiftUI
 import CoreText
 
 enum DSFontName: String, CaseIterable {
-    case regular = "CreatoDisplay-Regular" // <- change to your PS names
+    case regular = "CreatoDisplay-Regular"
     case bold    = "CreatoDisplay-Black"
 }
 
