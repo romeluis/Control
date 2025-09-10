@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Design" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 55">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 6.27px;
+      }
+    </style>
+  </defs>
+  <circle class="cls-1" cx="9.58" cy="27.5" r="3.58"/>
+  <circle class="cls-1" cx="27.5" cy="27.5" r="3.58"/>
+  <circle class="cls-1" cx="45.42" cy="27.5" r="3.58"/>
+</svg>

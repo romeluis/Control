@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Design" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 55">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 5px;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M12.32,25.64c2.53-8.14,10.13-14.05,19.1-14.05,11.05,0,20,8.95,20,20s-8.95,20-20,20"/>
+  <line class="cls-1" x1="23.42" y1="33.58" x2="3.42" y2="33.58"/>
+  <line class="cls-1" x1="23.42" y1="42.58" x2="9.42" y2="42.58"/>
+  <line class="cls-1" x1="23.42" y1="51.58" x2="16.42" y2="51.58"/>
+  <line class="cls-1" x1="31.42" y1="31.58" x2="38.42" y2="24.58"/>
+  <line class="cls-1" x1="31.42" y1="9.58" x2="31.42" y2="3.58"/>
+  <line class="cls-1" x1="26.92" y1="3.58" x2="35.92" y2="3.58"/>
+  <line class="cls-1" x1="17.48" y1="14.98" x2="13.42" y2="10.57"/>
+</svg>
