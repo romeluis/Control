@@ -7,15 +7,18 @@
 import SwiftUI
 import SwiftData
 
+public enum ControlInputState: Equatable {
+    case valid
+    case invalid(message: String)
+}
+
 public struct ControlTextField: View {
     var title: String = ""
     
     @Binding var input: String
-    @Binding var validState: Bool
+    @Binding var inputState: ControlInputState
     
     var placeholderText: String = ""
-    var errorMessage: String = ""
-    var isPercent: Bool = false
     var showError: Bool = true
     
     var backgroundColour: Color = .Control.white
@@ -24,26 +27,23 @@ public struct ControlTextField: View {
 
     @Binding var validationTrigger: Bool
 
-    var isValid: ((String) -> Bool)?
+    var isValid: ((String) -> ControlInputState)?
 
     public init(
         title: String = "",
         input: Binding<String>,
-        validState: Binding<Bool>,
+        inputState: Binding<ControlInputState>,
         placeholderText: String = "",
         errorMessage: String = "",
-        isPercent: Bool = false,
         showError: Bool = true,
         backgroundColour: Color = .Control.white,
         validationTrigger: Binding<Bool> = .constant(true),
-        isValid: ((String) -> Bool)? = nil
+        isValid: ((String) -> ControlInputState)? = nil
     ) {
         self.title = title
         self._input = input
-        self._validState = validState
+        self._inputState = inputState
         self.placeholderText = placeholderText
-        self.errorMessage = errorMessage
-        self.isPercent = isPercent
         self.showError = showError
         self.backgroundColour = backgroundColour
         self._validationTrigger = validationTrigger
@@ -65,25 +65,14 @@ public struct ControlTextField: View {
                 TextField(placeholderText, text: $input)
                     .bodyText()
                     .padding()
-                    .if(isPercent, transform: { content in
-                        content
-                            .keyboardType(.numbersAndPunctuation)
-                    })
                     .foregroundColor(textColour)
-                    .backgroundStroke(cornerRadius: 20, colour: !validState && showError  ? .red : outlineColour)
+                    .backgroundStroke(cornerRadius: 20, colour: inputState != .valid && showError  ? .red : outlineColour)
                     .backgroundFill(cornerRadius: 20, colour: backgroundColour)
-                
-                //Percent symbol if it is percentage
-                if isPercent {
-                    Text("%")
-                        //TODO: .headerText()
-                        .foregroundStyle(textColour)
-                }
             }
             
             //Error message if input is invalid
-            if !validState && !errorMessage.isEmpty {
-                Text(errorMessage)
+            if case let .invalid(message) = inputState, showError {
+                Text(message)
                     .smallText()
                     .padding(.leading, 7)
             }
@@ -99,9 +88,9 @@ public struct ControlTextField: View {
     func updateInputs() {
         withAnimation (.spring(duration: 0.3)) {
                 if isValid != nil {
-                    validState = isValid!(input)
+                    inputState = isValid!(input)
                 } else {
-                    validState = true
+                    inputState = .valid
                 }
             }
     }
@@ -109,37 +98,29 @@ public struct ControlTextField: View {
 
 #Preview (traits: .controlPreview) {
     @Previewable @State var text1: String = ""
-    @Previewable @State var text2: String = ""
     @Previewable @State var text3: String = ""
     @Previewable @State var update: Bool = false
-    @Previewable @State var valid1: Bool = true
-    @Previewable @State var valid2: Bool = true
-    @Previewable @State var valid3: Bool = true
+    @Previewable @State var valid1: ControlInputState = .valid
+    @Previewable @State var valid3: ControlInputState = .valid
     
     VStack {
-        ControlTextField(title: "Name", input: $text1, validState: $valid1, placeholderText: "Computer Organization", errorMessage: "Name cannot be empty") { text in
+        ControlTextField(title: "Name", input: $text1, inputState: $valid1, placeholderText: "Computer Organization", errorMessage: "Name cannot be empty", validationTrigger: $update) { text in
             if text.isEmpty {
-                return false
+                return .invalid(message: "No empty")
             }
-            return true
+            return .valid
         }
         
-        ControlTextField(title: "Percent", input: $text2, validState: $valid2, placeholderText: "Number", errorMessage: "Percent must be numeric", isPercent: true, validationTrigger: $update) { text in
-            do {
-                _ = try sanitizeDouble(input: text)
-                return true
-            } catch {
-                return false
-            }
-        }
-        ControlTextField(input: $text3, validState: $valid3, placeholderText: "Computer Organization", errorMessage: "Name cannot be empty", validationTrigger: $update) { text in
+        ControlTextField(input: $text3, inputState: $valid3, placeholderText: "Computer Organization", errorMessage: "Name cannot be empty", validationTrigger: $update) { text in
             if text.isEmpty {
-                return false
+                return .invalid(message: "No empty")
+            } else if text == "Test" {
+                return .invalid(message: "No test")
             }
-            return true
+            return .valid
         }
         Spacer()
-        Text("Valid States: \(valid1 ? "✓" : "✗") \(valid2 ? "✓" : "✗") \(valid3 ? "✓" : "✗")")
+        Text("Valid States: \(valid1 == .valid ? "✓" : "✗") \(valid3 == .valid ? "✓" : "✗")")
         ControlButton(text: "Update Signal", type: .primary) {
             update.toggle()
         }

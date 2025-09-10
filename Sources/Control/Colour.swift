@@ -8,7 +8,14 @@
 import SwiftUI
 
 public extension Color {
-    enum Control { } // namespace
+    enum Control: String, CaseIterable {
+        case orangeColour = "Orange"
+        case greenColour = "Green"
+        case blueColour = "Blue"
+        case pinkColour = "Pink"
+        case purpleColour = "Purple"
+        case yellowColour = "Yellow"
+    } // namespace
 }
 
 public extension Color.Control {
