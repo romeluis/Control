@@ -27,7 +27,7 @@ struct ControlOptionalDouble: View {
     var body: some View {
         ControlTextField(title: title, input: $currentText, inputState: $inputState, placeholderText: placeholderText, showError: showError, backgroundColour: backgroundColour, outlineColour: outlineColour, textColour: textColour, validationTrigger: $validationTrigger) { value in
             if value.isEmpty {
-                return .invalid(message: "Field is required")
+                return .valid
             }
             
             if let _ = Double(value) {
@@ -52,18 +52,18 @@ struct ControlOptionalDouble: View {
 }
 
 #Preview (traits: .controlPreview) {
-    @Previewable @State var text1: Double = 0
-    @Previewable @State var text3: Double = 0
+    @Previewable @State var text1: Double? = 0
+    @Previewable @State var text3: Double? = nil
     @Previewable @State var update: Bool = false
     @Previewable @State var valid1: ControlInputState = .valid
     @Previewable @State var valid3: ControlInputState = .valid
     
     VStack {
-        ControlDouble(title: "Name", input: $text1, inputState: $valid1, validationTrigger: $update)
+        ControlOptionalDouble(title: "Name", input: $text1, inputState: $valid1, validationTrigger: $update)
         
-        ControlDouble(input: $text3, inputState: $valid3, validationTrigger: $update)
+        ControlOptionalDouble(input: $text3, inputState: $valid3, validationTrigger: $update)
         Spacer()
-        Text("States: \(text1) \(text3)")
+        Text("States: \(String(describing: text1)) \(String(describing: text3))")
         ControlButton(text: "Update Signal", type: .primary) {
             update.toggle()
         }

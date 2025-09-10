@@ -8,7 +8,7 @@
 import Foundation
 import MathParser
 
-extension Date {
+public extension Date {
     func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
         return calendar.dateComponents(Set(components), from: self)
     }
@@ -18,7 +18,7 @@ extension Date {
     }
 }
 
-func format(percent: Double, minimumDigits: Int = 0, maximumDigits: Int = 2) -> String {
+public func format(percent: Double, minimumDigits: Int = 0, maximumDigits: Int = 2) -> String {
     let number = percent * 100
     
     // Check if the number is whole, considering floating-point precision issues
@@ -32,7 +32,12 @@ func format(percent: Double, minimumDigits: Int = 0, maximumDigits: Int = 2) -> 
         return formatter.string(from: NSNumber(value: number)) ?? "\(number)"
     }
 }
-func sanitizeDouble(input: String) throws -> Double {
+
+public enum DoubleError: String, Error {
+    case outOfBounds = "Value must be between 0 and 100"
+    case invalid = "Value must be a valid number or expression"
+}
+public func sanitizeDouble(input: String) throws -> Double {
     // Remove leading/trailing whitespaces
     let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
     
@@ -41,8 +46,7 @@ func sanitizeDouble(input: String) throws -> Double {
         // If the number is more than 1, treat it as a percentage (0-100)
         if direct > 1 {
             if direct > 100 || direct < 0 {
-                //TODO: throw InsertionCode.incompatible
-                return 0
+                throw DoubleError.outOfBounds
             }
             return direct / 100
         } else {
@@ -56,8 +60,7 @@ func sanitizeDouble(input: String) throws -> Double {
         let evaluated = try trimmed.evaluate()
         if evaluated > 1 {
             if evaluated > 100 || evaluated < 0 {
-                //TODO: throw InsertionCode.incompatible
-                return 0
+                throw DoubleError.outOfBounds
             }
             return evaluated / 100
         } else {
@@ -65,7 +68,6 @@ func sanitizeDouble(input: String) throws -> Double {
         }
     } catch {
         // If parsing fails, throw an error.
-        //TODO: throw InsertionCode.incompatible
-        return 0
+        throw DoubleError.invalid
     }
 }
