@@ -52,6 +52,6 @@ public struct Callout: View {
 }
 
 #Preview (traits: .controlPreview) {
-    Callout(symbol: "Warning", title: "Warning!", bodyText: "This is an important message", backgroundColour: Color("UI Light 1"))
-    Callout(symbol: "Warning", title: "Warning!", backgroundColour: Color("UI Light 1"))
+    Callout(symbol: "Warning", title: "Warning!", bodyText: "This is an important message", backgroundColour: .Control.gray1)
+    Callout(symbol: "Warning", title: "Warning!", backgroundColour: .Control.gray1)
 }

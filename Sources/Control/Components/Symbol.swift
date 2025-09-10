@@ -10,9 +10,9 @@ import SwiftUI
 public struct Symbol: View {
     @State var symbol: String
     @State var size: CGFloat
-    @State var colour: Color = Color(.label)
+    @State var colour: Color = .Control.black
     
-    public init(symbol: String, size: CGFloat, colour: Color = Color(.label)) {
+    public init(symbol: String, size: CGFloat, colour: Color = .Control.black) {
         self.symbol = symbol
         self.size = size
         self.colour = colour

@@ -48,7 +48,7 @@ public struct LineChartView: View {
                                             .fill(.clear)
                                             .frame(height: 10)
                                         ForEach(0..<chart.yAxisLabels.count, id: \.self) { index in
-                                            HorizontalDivider(colour: Color("UI White"), width: index % 2 == 0 ? 2 : 1)
+                                            HorizontalDivider(colour: .Control.white, width: index % 2 == 0 ? 2 : 1)
                                                 .frame(height: 20)
                                             if index != chart.yAxisLabels.count - 1 {
                                                 Spacer()
@@ -66,7 +66,7 @@ public struct LineChartView: View {
                                             .fill(.clear)
                                             .frame(width: 10)
                                         ForEach(0..<chart.xAxisLabels.count, id: \.self) { index in
-                                            VerticalDivider(colour: Color("UI White"))
+                                            VerticalDivider(colour: .Control.white)
                                                 .frame(width: 12)
                                             if index != chart.xAxisLabels.count - 1 {
                                                 Spacer()
@@ -108,7 +108,7 @@ public struct LineChartView: View {
                                             let y = availableHeight * (1 - CGFloat(point.y) / 100)
                                             Circle()
                                                 .fill(point.colour)
-                                                .stroke(Color("UI White"), lineWidth: 4)
+                                                .stroke(.white, lineWidth: 4)
                                                 .frame(width: 15, height: 15)
                                                 .position(x: x, y: y)
                                         }
@@ -118,7 +118,7 @@ public struct LineChartView: View {
                                     .zIndex(1)
                                 }
                                 .frame(minHeight: 250)
-                                .backgroundFill(cornerRadius: 10, colour: Color("UI Light 1"))
+                                .backgroundFill(cornerRadius: 10, colour: .Control.gray1)
                                 
                                 // X-axis labels
                                 HStack {
@@ -148,22 +148,22 @@ public struct LineChartView: View {
     }
 }
 
-#Preview {
+#Preview (traits: .controlPreview) {
     @Previewable let sampleChart = LineChart(
             dataPoints: [
-                DataPoint(x: 1, y: 75, colour: Color("Purple Base")),
-                DataPoint(x: 2, y: 50, colour: Color("Purple Base")),
-                DataPoint(x: 3, y: 90, colour: Color("Purple Base")),
-                DataPoint(x: 4, y: 25, colour: Color("AccentColor")),
-                DataPoint(x: 5, y: 90, colour: Color("Purple Base")),
-                DataPoint(x: 6, y: 80, colour: Color("Purple Base")),
-                DataPoint(x: 7, y: 95, colour: Color("Purple Base")),
-                DataPoint(x: 8, y: 45, colour: Color("Purple Base")),
-                DataPoint(x: 9, y: 30, colour: Color("Purple Base")),
-                DataPoint(x: 10, y: 70, colour: Color("Purple Base")),
-                DataPoint(x: 11, y: 97, colour: Color("Purple Base")),
-                DataPoint(x: 12, y: 33, colour: Color("Purple Base")),
-                DataPoint(x: 13, y: 99, colour: Color("Purple Base"))
+                DataPoint(x: 1, y: 75, colour: .Control.purple),
+                DataPoint(x: 2, y: 50, colour: .Control.purple),
+                DataPoint(x: 3, y: 90, colour: .Control.purple),
+                DataPoint(x: 4, y: 25, colour: .accentColor),
+                DataPoint(x: 5, y: 90, colour: .Control.purple),
+                DataPoint(x: 6, y: 80, colour: .Control.purple),
+                DataPoint(x: 7, y: 95, colour: .Control.purple),
+                DataPoint(x: 8, y: 45, colour: .Control.purple),
+                DataPoint(x: 9, y: 30, colour: .Control.purple),
+                DataPoint(x: 10, y: 70, colour: .Control.purple),
+                DataPoint(x: 11, y: 97, colour: .Control.purple),
+                DataPoint(x: 12, y: 33, colour: .Control.purple),
+                DataPoint(x: 13, y: 99, colour: .Control.purple)
             ],
             title: "Performance Over Time",
             xAxisLabels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"],
@@ -171,19 +171,19 @@ public struct LineChartView: View {
         )
     @Previewable let sampleChart1 = LineChart(
             dataPoints: [
-                DataPoint(x: 1, y: 75, colour: Color("Purple Base")),
-                DataPoint(x: 2, y: 50, colour: Color("Purple Base")),
-                DataPoint(x: 3, y: 90, colour: Color("Purple Base")),
-                DataPoint(x: 4, y: 25, colour: Color("AccentColor")),
-                DataPoint(x: 5, y: 90, colour: Color("Purple Base")),
-                DataPoint(x: 6, y: 80, colour: Color("Purple Base")),
-                DataPoint(x: 7, y: 95, colour: Color("Purple Base")),
-                DataPoint(x: 8, y: 45, colour: Color("Purple Base")),
-                DataPoint(x: 9, y: 30, colour: Color("Purple Base")),
-                DataPoint(x: 10, y: 70, colour: Color("Purple Base")),
-                DataPoint(x: 11, y: 97, colour: Color("Purple Base")),
-                DataPoint(x: 12, y: 33, colour: Color("Purple Base")),
-                DataPoint(x: 13, y: 99, colour: Color("Purple Base"))
+                DataPoint(x: 1, y: 75, colour: .Control.purple),
+                DataPoint(x: 2, y: 50, colour: .Control.purple),
+                DataPoint(x: 3, y: 90, colour: .Control.purple),
+                DataPoint(x: 4, y: 25, colour: .accentColor),
+                DataPoint(x: 5, y: 90, colour: .Control.purple),
+                DataPoint(x: 6, y: 80, colour: .Control.purple),
+                DataPoint(x: 7, y: 95, colour: .Control.purple),
+                DataPoint(x: 8, y: 45, colour: .Control.purple),
+                DataPoint(x: 9, y: 30, colour: .Control.purple),
+                DataPoint(x: 10, y: 70, colour: .Control.purple),
+                DataPoint(x: 11, y: 97, colour: .Control.purple),
+                DataPoint(x: 12, y: 33, colour: .Control.purple),
+                DataPoint(x: 13, y: 99, colour: .Control.purple)
             ],
             title: "Performance Over Time",
             xAxisLabels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"],
