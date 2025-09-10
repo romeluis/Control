@@ -2,7 +2,7 @@
 //  GlobalText.swift
 //  Control
 //
-//  Created by Romel Luis Faife Cruz on 2025-01-23.
+//  Created by Romel Luis Faife Cruz on 2025-09-23.
 //
 
 import SwiftUI

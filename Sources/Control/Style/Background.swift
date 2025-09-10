@@ -2,7 +2,7 @@
 //  Background.swift
 //  Control
 //
-//  Created by Romel Luis Faife Cruz on 2025-02-24.
+//  Created by Romel Luis Faife Cruz on 2025-09-24.
 //
 
 import SwiftUI
