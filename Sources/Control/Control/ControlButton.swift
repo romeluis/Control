@@ -7,20 +7,12 @@
 
 import SwiftUI
 
-enum ControlButtonStyle {
-    case none
-    case circleFill
-    case circleStroke
-    case squareFill
-    case squareStroke
-}
-
-enum ControlButtonSymbolLocation {
+public enum ControlButtonSymbolLocation {
     case leading
     case trailing
 }
 
-enum ControlButtonType {
+public enum ControlButtonType {
     case primary
     case secondary
     case accessory
@@ -29,40 +21,78 @@ enum ControlButtonType {
     case toolbar
 }
 
-struct ControlButton: View {
+@Observable
+public final class ControlButtonObject: Identifiable {
+    public var text: String?
+    public var symbol: String?
+    
+    public var type: ControlButtonType
+    public var symbolLocation: ControlButtonSymbolLocation = .leading
+    public var buttonLocation: Alignment = .center
+    public var expandWidth: Bool = false
+    
+    public var backgroundColour: Color? = nil
+    public var outlineColour: Color? = nil
+    public var textColour: Color? = nil
+    
+    public var action: () -> Void
+    
+    init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil, action: @escaping () -> Void) {
+        self.text = text
+        self.symbol = symbol
+        self.type = type
+        self.symbolLocation = symbolLocation
+        self.buttonLocation = buttonLocation
+        self.expandWidth = expandWidth
+        self.backgroundColour = backgroundColour
+        self.outlineColour = outlineColour
+        self.textColour = textColour
+        self.action = action
+    }
+    init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil) {
+        self.text = text
+        self.symbol = symbol
+        self.type = type
+        self.symbolLocation = symbolLocation
+        self.buttonLocation = buttonLocation
+        self.expandWidth = expandWidth
+        self.backgroundColour = backgroundColour
+        self.outlineColour = outlineColour
+        self.textColour = textColour
+        self.action = {}
+    }
+}
+
+public struct ControlButton: View {
     @Environment(\.isEnabled) var isEnabled
     
-    var text: String?
-    var symbol: String?
+    @Bindable var object: ControlButtonObject
     
-    var type: ControlButtonType
-    var symbolLocation: ControlButtonSymbolLocation = .leading
-    var buttonLocation: Alignment = .center
-    var expandWidth: Bool = false
+    public init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil, action: @escaping () -> Void) {
+        self._object = .init(wrappedValue: .init(text: text, symbol: symbol, type: type, symbolLocation: symbolLocation, buttonLocation: buttonLocation, expandWidth: expandWidth, backgroundColour: backgroundColour, outlineColour: outlineColour, textColour: textColour, action: action))
+    }
+    public init(_ object: ControlButtonObject) {
+        self._object = .init(wrappedValue: object)
+    }
     
-    var backgroundColour: Color? = nil
-    var outlineColour: Color? = nil
-    var textColour: Color? = nil
-    
-    var action: () -> Void
-    
-    var body: some View {
+    public var body: some View {
         Button {
             withAnimation(.spring(duration: 0.3)) {
-                action()
+                object.action()
             }
         } label: {
-            ControlButtonLabel(text: text, symbol: symbol, type: type, symbolLocation: symbolLocation, buttonLocation: buttonLocation, expandWidth: expandWidth, backgroundColour: backgroundColour, outlineColour: outlineColour, textColour: textColour)
+            ControlButtonLabel(object)
         }
-        .if(buttonLocation == .leading || buttonLocation == .trailing) { content in
+        .if(object.buttonLocation == .leading || object.buttonLocation == .trailing) { content in
             content
-                .frame(maxWidth: .infinity, alignment: buttonLocation)
+                .frame(maxWidth: .infinity, alignment: object.buttonLocation)
         }
     }
 }
 
 #Preview (traits: .controlPreview) {
-    VStack {
+    @Previewable @State var objs: [ControlButtonObject] = [.init(text: "Initial", type: .primary, action: {})]
+    ScrollView {
         ControlButton(text: "Hello", symbol: "Check Mark", type: .primary, symbolLocation: .leading, expandWidth: false) {
             
         }
@@ -76,6 +106,30 @@ struct ControlButton: View {
             
         }
         .disabled(true)
+        
+        HStack {
+            ForEach(objs) { o in
+                ControlButton(o)
+            }
+        }
+        
+        ControlButton(text: "Change Type",type: .secondary) {
+            if let first = objs.first {
+                first.type = .secondary
+                first.symbol = "Check Mark"
+                first.text = "Changed!"
+                first.action = {
+                    first.type = .mini
+                    first.action = {}
+                }
+            }
+        }
+        ControlButton(symbol: "Plus",type: .secondary) {
+            objs.append(.init(text: "Added", type: .primary, action: {}))
+        }
+        ControlButton(symbol: "Minus",type: .secondary) {
+            _ = objs.popLast()
+        }
         
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)

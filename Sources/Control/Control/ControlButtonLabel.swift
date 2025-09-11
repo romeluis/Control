@@ -10,24 +10,21 @@ import SwiftUI
 public struct ControlButtonLabel: View {
     @Environment(\.isEnabled) var isEnabled
     
-    var text: String?
-    var symbol: String?
+    @Bindable var object: ControlButtonObject
     
-    var type: ControlButtonType
-    var symbolLocation: ControlButtonSymbolLocation = .leading
-    var buttonLocation: Alignment = .center
-    var expandWidth: Bool = false
-    
-    var backgroundColour: Color? = nil
-    var outlineColour: Color? = nil
-    var textColour: Color? = nil
+    public init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil, action: @escaping () -> Void) {
+        self._object = .init(wrappedValue: .init(text: text, symbol: symbol, type: type, symbolLocation: symbolLocation, buttonLocation: buttonLocation, expandWidth: expandWidth, backgroundColour: backgroundColour, outlineColour: outlineColour, textColour: textColour, action: action))
+    }
+    public init(_ object: ControlButtonObject) {
+        self._object = .init(wrappedValue: object)
+    }
     
     private var backgroundColourCalculated: Color {
-        if let colour = backgroundColour {
+        if let colour = object.backgroundColour {
             return colour
         }
         
-        switch type {
+        switch object.type {
         case .primary:
             return .accentColor
         case .secondary:
@@ -43,17 +40,17 @@ public struct ControlButtonLabel: View {
         }
     }
     private var outlineColourCalculated: Color {
-        if let colour = outlineColour {
+        if let colour = object.outlineColour {
             return colour
         }
         return .clear
     }
     private var textColourCalculated: Color {
-        if let colour = textColour {
+        if let colour = object.textColour {
             return colour
         }
         
-        switch type {
+        switch object.type {
         case .primary:
             return .Control.white
         case .secondary:
@@ -70,7 +67,7 @@ public struct ControlButtonLabel: View {
     }
     
     private var symbolSize: CGFloat {
-        switch type {
+        switch object.type {
         case .primary:
             return 20
         case .secondary:
@@ -87,7 +84,7 @@ public struct ControlButtonLabel: View {
     }
     
     private var cornerRadius: CGFloat {
-        switch type {
+        switch object.type {
         case .primary:
             return 20
         case .secondary:
@@ -104,41 +101,41 @@ public struct ControlButtonLabel: View {
     }
     
     private var horizontalPadding: CGFloat {
-        switch type {
+        switch object.type {
         case .primary:
-            return text == nil ? 14 : 20
+            return object.text == nil ? 14 : 20
         case .secondary:
-            return text == nil ? 14 : 20
+            return object.text == nil ? 14 : 20
         case .toolbar:
             return 10
         case .accessory:
-            return text == nil ? 8 : 10
+            return object.text == nil ? 8 : 10
         case .capsule:
-            return text == nil ? 16 : 20
+            return object.text == nil ? 16 : 20
         case .mini:
-            return text == nil ? 9 : 10
+            return object.text == nil ? 9 : 10
         }
     }
     
     private var verticalPadding: CGFloat {
-        switch type {
+        switch object.type {
         case .primary:
-            return text == nil ? 12 : 15
+            return object.text == nil ? 12 : 15
         case .secondary:
-            return text == nil ? 12 : 15
+            return object.text == nil ? 12 : 15
         case .toolbar:
             return 10
         case .accessory:
-            return text == nil ? 8 : 7
+            return object.text == nil ? 8 : 7
         case .capsule:
             return 15
         case .mini:
-            return text == nil ? 8 : 7
+            return object.text == nil ? 8 : 7
         }
     }
     
     private var spacing: CGFloat {
-        switch type {
+        switch object.type {
         case .primary:
             return 7
         case .secondary:
@@ -156,7 +153,7 @@ public struct ControlButtonLabel: View {
     
     public var body: some View {
         Group {
-            switch type {
+            switch object.type {
             case .toolbar:
                 toolbar
             default:
@@ -166,50 +163,50 @@ public struct ControlButtonLabel: View {
         .opacity(isEnabled ? 1 : 0.75)
         .saturation(isEnabled ? 1 : 0.75)
         .animation(.spring(duration: 0.3), value: isEnabled)
-        .animation(.spring(duration: 0.3), value: symbol)
+        .animation(.spring(duration: 0.3), value: object.symbol)
     }
     
     var generic: some View {
         HStack (spacing: spacing) {
-            if symbolLocation == .leading && symbol != nil {
-                Symbol(symbol: symbol!, size: symbolSize, colour: textColourCalculated)
+            if object.symbolLocation == .leading && object.symbol != nil {
+                Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
             }
             
-            if text != nil {
-                Text(text!)
-                    .if(type == .primary || type == .secondary || type == .accessory) { content in
+            if object.text != nil {
+                Text(object.text!)
+                    .if(object.type == .primary || object.type == .secondary || object.type == .accessory) { content in
                         content
                             .bodyText()
                     }
-                    .if(type == .mini) { content in
+                    .if(object.type == .mini) { content in
                         content
                             .smallText()
                     }
                     .foregroundColor(textColourCalculated)
             }
             
-            if symbolLocation == .trailing && symbol != nil {
-                Symbol(symbol: symbol!, size: symbolSize, colour: textColourCalculated)
+            if object.symbolLocation == .trailing && object.symbol != nil {
+                Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
             }
         }
         .padding(.horizontal, horizontalPadding)
         .padding(.vertical, verticalPadding)
-        .frame(maxWidth: expandWidth ? .infinity : nil)
+        .frame(maxWidth: object.expandWidth ? .infinity : nil)
         .backgroundStroke(cornerRadius: cornerRadius, colour: outlineColourCalculated)
         .backgroundFill(cornerRadius: cornerRadius, colour: backgroundColourCalculated)
     }
     
     var toolbar: some View {
         HStack {
-            if symbol != nil {
+            if object.symbol != nil {
                 if #available(iOS 26.0, *) {
-                    Symbol(symbol: symbol!, size: symbolSize, colour: textColourCalculated)
+                    Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
                         .padding(.horizontal, horizontalPadding)
                         .padding(.vertical, verticalPadding)
-                        .glassEffect(backgroundColour == nil ? .regular.interactive() : .regular.tint(backgroundColourCalculated))
+                        .glassEffect(object.backgroundColour == nil ? .regular.interactive() : .regular.tint(backgroundColourCalculated))
                         .transition(.blurReplace)
                 } else {
-                    Symbol(symbol: symbol!, size: symbolSize, colour: textColourCalculated)
+                    Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
                         .padding(.horizontal, horizontalPadding)
                         .padding(.vertical, verticalPadding)
                         .background(
