@@ -8,7 +8,7 @@
 import SwiftUI
 
 @Observable
-public final class ControlSelectorObject<Content: View>: Identifiable {
+public final class ControlCustomSelectorObject<Content: View>: Identifiable {
     public var title: String
     public var input: Binding<Bool>
 
@@ -41,8 +41,8 @@ public final class ControlSelectorObject<Content: View>: Identifiable {
     }
 }
 
-public struct ControlSelector<Content: View>: View {
-    @Bindable var object: ControlSelectorObject<Content>
+public struct ControlCustomSelector<Content: View>: View {
+    @Bindable var object: ControlCustomSelectorObject<Content>
     
     @Binding var internalState: Bool
     
@@ -57,7 +57,7 @@ public struct ControlSelector<Content: View>: View {
         @ViewBuilder content: () -> Content
     ) {
         self._object = .init(wrappedValue:
-            ControlSelectorObject(
+            ControlCustomSelectorObject(
                 title: title,
                 input: input,
                 symbol: symbol,
@@ -70,7 +70,7 @@ public struct ControlSelector<Content: View>: View {
         )
         self._internalState = input
     }
-    public init(_ object: ControlSelectorObject<Content>) {
+    public init(_ object: ControlCustomSelectorObject<Content>) {
         self._object = .init(wrappedValue: object)
         self._internalState = object.input
     }
@@ -123,13 +123,13 @@ public struct ControlSelector<Content: View>: View {
 #Preview (traits: .controlPreview) {
     @Previewable @State var input: Bool = false
     @Previewable @State var input1: Bool = true
-    @Previewable @State var selectors: [ControlSelectorObject<Text>] = []
+    @Previewable @State var selectors: [ControlCustomSelectorObject<Text>] = []
     ScrollView {
-        ControlSelector(title: "Test", input: $input) {
+        ControlCustomSelector(title: "Test", input: $input) {
             Text("Test")
                 .bodyText()
         }
-        ControlSelector(title: "Test", input: $input, symbol: "Cancel") {
+        ControlCustomSelector(title: "Test", input: $input, symbol: "Cancel") {
             VStack {
                 Symbol(symbol: "Check Mark", size: 17, colour: .blue)
                 Text("Anything can go here!")
@@ -139,11 +139,11 @@ public struct ControlSelector<Content: View>: View {
         HorizontalDivider(colour: .Control.gray4)
         
         ForEach(selectors) { selector in
-            ControlSelector(selector)
+            ControlCustomSelector(selector)
         }
         
         ControlButton(text: "Add", type: .secondary) {
-            let new = ControlSelectorObject(title: "Dynamic \(selectors.count + 1)", input: $input1, content: {
+            let new = ControlCustomSelectorObject(title: "Dynamic \(selectors.count + 1)", input: $input1, content: {
                 Text("This is dynamic \(selectors.count + 1)!")
             })
             selectors.append(new)

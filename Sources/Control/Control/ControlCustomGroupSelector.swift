@@ -7,39 +7,21 @@
 import SwiftUI
 import SwiftData
 
-enum ControlGroupSelectorState {
-    case selected
-    case unselected
-    case partiallySelected
-}
-
-struct ControlGroupSelector: View {
+struct ControlCustomGroupSelector: View {
     var title: String = ""
     
-    @Binding var input: [ControlSelectorObject<AnyView>]
+    @Binding var input: [ControlCustomSelectorObject<AnyView>]
     var groupText: String
     
-    var enabledSymbol: String = "Check Mark"
-    var partialSymbol: String = "Minus"
     var backgroundColour: Color = .Control.white
     var outlineColour: Color = .clear
     var symbolColour: Color = .Control.white
     var controlColour: Color = .accentColor
 
-    private var groupSelector: ControlGroupSelectorState {
-        let total = input.count
-        let selected = input.reduce(0) { $0 + ($1.input.wrappedValue ? 1 : 0) }
-        if selected == 0 || total == 0 { return .unselected }
-        if selected == total { return .selected }
-        return .partiallySelected
-    }
-
     public init(
         title: String = "",
-        input: Binding<[ControlSelectorObject<AnyView>]>,
+        input: Binding<[ControlCustomSelectorObject<AnyView>]>,
         groupText: String,
-        enabledSymbol: String = "Check Mark",
-        partialSymbol: String = "Minus",
         backgroundColour: Color = .Control.white,
         outlineColour: Color = .clear,
         symbolColour: Color = .Control.white,
@@ -48,8 +30,6 @@ struct ControlGroupSelector: View {
         self.title = title
         self._input = input
         self.groupText = groupText
-        self.enabledSymbol = enabledSymbol
-        self.partialSymbol = partialSymbol
         self.backgroundColour = backgroundColour
         self.outlineColour = outlineColour
         self.symbolColour = symbolColour
@@ -71,40 +51,12 @@ struct ControlGroupSelector: View {
                         .bodyText()
                     Spacer()
                     
-                    Group {
-                        switch groupSelector {
-                        case .selected:
-                            Symbol(symbol: enabledSymbol, size: 17, colour: symbolColour)
-                                .background(
-                                    Circle()
-                                        .fill(controlColour)
-                                        .frame(width: 22, height: 22)
-                                )
-                        case .unselected:
-                            Symbol(symbol: enabledSymbol, size: 17, colour: .clear)
-                                .background(
-                                    Circle()
-                                        .stroke(lineWidth: 2)
-                                        .foregroundColor(controlColour)
-                                        .frame(width: 20, height: 20)
-                                )
-                        case .partiallySelected:
-                            Symbol(symbol: partialSymbol, size: 17, colour: symbolColour)
-                                .scaleEffect(x: 0.7, y: 1.1)
-                                .background(
-                                    Circle()
-                                        .fill(controlColour)
-                                        .frame(width: 22, height: 22)
-                                )
-                        }
-                    }
-                    .id(groupSelector)
-                    .padding(.trailing, 5)
-                    .onTapGesture {
-                        if groupSelector == .selected {
-                            setAllTo(value: false)
-                        } else if groupSelector == .unselected || groupSelector == .partiallySelected {
+                    HStack {
+                        ControlButton(text: "Select All", type: .accessory, backgroundColour: .Control.gray1, textColour: .accentColor) {
                             setAllTo(value: true)
+                        }
+                        ControlButton(text: "Deselect All", type: .accessory, backgroundColour: .Control.gray1, textColour: .accentColor) {
+                            setAllTo(value: false)
                         }
                     }
                 }
@@ -112,7 +64,7 @@ struct ControlGroupSelector: View {
                 .padding(.vertical, -10)
                 
                 ForEach(input) { element in
-                    ControlSelector(element)
+                    ControlCustomSelector(element)
                 }
             }
             .padding()
@@ -133,10 +85,10 @@ struct ControlGroupSelector: View {
     @Previewable @State var inner3: Bool = false
     @Previewable @State var inner4: Bool = false
 
-    @Previewable @State var input: [ControlSelectorObject<AnyView>] = []
+    @Previewable @State var input: [ControlCustomSelectorObject<AnyView>] = []
 
     ScrollView {
-        ControlGroupSelector(input: $input, groupText: "Test")
+        ControlCustomGroupSelector(input: $input, groupText: "Test")
             .onAppear {
                 input = [
                     .init(input: $inner1) {
