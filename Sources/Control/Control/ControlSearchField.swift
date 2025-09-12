@@ -21,6 +21,7 @@ struct ControlSearchField: View {
     var textColour: Color = .accentColor
     
     var search: (String) -> [String]
+    var isValid: (String, [String]) -> ControlInputState
     
     @State var valueSelected: Bool = false
     
@@ -40,17 +41,27 @@ struct ControlSearchField: View {
                 //Textfield
                 HStack (spacing: 15) {
                     ControlTextField(input: $input, inputState: $inputState, placeholderText: placeholderText, showError: showError, backgroundColour: backgroundColour, outlineColour: outlineColour, textColour: textColour) { value in
-                        if value.isEmpty {
-                            return .valid
+                        return isValid(value, results)
+                    }
+                }
+                .onChange(of: input) {
+                    withAnimation (.spring(duration: 0.3)) {
+                        results = search(input)
+                        if valueSelected {
+                            valueSelected = false
                         }
-                        
-                        results = search(value)
-                        
-                        if results.isEmpty {
-                            return .invalid(message: "No results found")
+                    }
+                }
+                .onSubmit {
+                    withAnimation (.spring(duration: 0.3)) {
+                        if !results.isEmpty {
+                            input = results.first!
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                withAnimation (.spring(duration: 0.3)) {
+                                    valueSelected = true
+                                }
+                            }
                         }
-                        
-                        return .valid
                     }
                 }
                 
@@ -92,6 +103,7 @@ struct ControlSearchField: View {
                         }
                     }
                     .padding()
+                    .backgroundStroke(cornerRadius: 20, colour: outlineColour)
                     .backgroundFill(cornerRadius: 20, colour: backgroundColour)
                 }
             }
@@ -108,6 +120,16 @@ struct ControlSearchField: View {
     ScrollView {
         ControlSearchField(input: $input, inputState: $state) { string in
             return options.filter { $0.lowercased().contains(string.lowercased()) }
+        } isValid: { value, results in
+            if value.isEmpty {
+                return .valid
+            }
+            
+            if results.isEmpty {
+                return .invalid(message: "No results found")
+            }
+            
+            return .valid
         }
         .padding()
     }
