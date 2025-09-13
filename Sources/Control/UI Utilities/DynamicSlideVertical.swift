@@ -7,18 +7,23 @@
 
 import SwiftUI
 
-extension AnyTransition {
+public extension AnyTransition {
     struct DynamicSlideVerticalModifier: ViewModifier {
         let height: CGFloat
         @Binding var forward: Bool
+        
+        public init(height: CGFloat, forward: Binding<Bool>) {
+            self.height = height
+            self._forward = forward
+        }
 
-        func body(content: Content) -> some View {
+        public func body(content: Content) -> some View {
             content
                 .offset(y: (forward ? -1 : 1) * height)
         }
     }
 
-    static func dynamicSlideVertical(forward: Binding<Bool>) -> AnyTransition {
+    @MainActor static func dynamicSlideVertical(forward: Binding<Bool>) -> AnyTransition {
         return .asymmetric(
             insertion: .modifier(
                 active: DynamicSlideVerticalModifier(height: 30, forward: forward),

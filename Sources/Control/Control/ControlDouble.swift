@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ControlDouble: View {
+public struct ControlDouble: View {
     var title: String = ""
     
     @Binding var input: Double
@@ -24,7 +24,29 @@ struct ControlDouble: View {
     
     @State private var currentText: String = ""
     
-    var body: some View {
+    public init(
+        title: String = "",
+        input: Binding<Double>,
+        inputState: Binding<ControlInputState>,
+        placeholderText: String = "Decimal Value",
+        showError: Bool = true,
+        backgroundColour: Color = .Control.white,
+        outlineColour: Color = .clear,
+        textColour: Color = .accentColor,
+        validationTrigger: Binding<Bool> = .constant(true)
+    ) {
+        self.title = title
+        self._input = input
+        self._inputState = inputState
+        self.placeholderText = placeholderText
+        self.showError = showError
+        self.backgroundColour = backgroundColour
+        self.outlineColour = outlineColour
+        self.textColour = textColour
+        self._validationTrigger = validationTrigger
+    }
+    
+    public var body: some View {
         ControlTextField(title: title, input: $currentText, inputState: $inputState, placeholderText: placeholderText, showError: showError, backgroundColour: backgroundColour, outlineColour: outlineColour, textColour: textColour, validationTrigger: $validationTrigger) { value in
             if value.isEmpty {
                 return .invalid(message: "Field is required")

@@ -7,12 +7,17 @@
 
 import SwiftUI
 
-extension AnyTransition {
+public extension AnyTransition {
     struct DynamicSlideHorizontalModifier: ViewModifier {
-        let width: CGFloat
-        @Binding var forward: Bool
+        public let width: CGFloat
+        @Binding public var forward: Bool
 
-        func body(content: Content) -> some View {
+        public init(width: CGFloat, forward: Binding<Bool>) {
+            self.width = width
+            self._forward = forward
+        }
+
+        public func body(content: Content) -> some View {
             content
                 .offset(x: (forward ? 1 : -1) * width)
         }

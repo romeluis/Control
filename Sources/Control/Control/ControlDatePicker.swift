@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ControlDatePicker: View {
+public struct ControlDatePicker: View {
     var title: String = ""
     
     @Binding var input: Date
@@ -31,6 +31,30 @@ struct ControlDatePicker: View {
     @State private var minute: Int = 0
     
     @Namespace private var namespace
+    
+    public init(
+        title: String = "",
+        input: Binding<Date>,
+        validStartDate: Date = .distantPast,
+        validEndDate: Date = .distantFuture,
+        includeDate: Bool = true,
+        includeYear: Bool = true,
+        includeTime: Bool = true,
+        backgroundColour: Color = .Control.white,
+        outlineColour: Color = .Control.gray1,
+        textColour: Color = .accentColor
+    ) {
+        self.title = title
+        self._input = input
+        self.validStartDate = validStartDate
+        self.validEndDate = validEndDate
+        self.includeDate = includeDate
+        self.includeYear = includeYear
+        self.includeTime = includeTime
+        self.backgroundColour = backgroundColour
+        self.outlineColour = outlineColour
+        self.textColour = textColour
+    }
     
     private var numberOfDaysInMonth: Int {
         let calendar = Calendar.current
@@ -210,7 +234,7 @@ struct ControlDatePicker: View {
         }
     }
     
-    var body: some View {
+    public var body: some View {
         VStack (alignment: .leading, spacing: 5) {
             //Title of textfield if present
             if !title.isEmpty {

@@ -6,12 +6,17 @@
 
 import SwiftUI
 
-struct AnimatablePath: Shape {
+public struct AnimatablePath: Shape {
     var start: CGPoint
     var end: CGPoint
+
+    public init(start: CGPoint, end: CGPoint) {
+        self.start = start
+        self.end = end
+    }
     
     // For now, animate only the endpoints (geometry)
-    var animatableData: AnimatablePair<
+    public var animatableData: AnimatablePair<
         AnimatablePair<CGFloat, CGFloat>,
         AnimatablePair<CGFloat, CGFloat>
     > {
@@ -27,7 +32,7 @@ struct AnimatablePath: Shape {
         }
     }
     
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         var path = Path()
         path.move(to: start)
         path.addLine(to: end)

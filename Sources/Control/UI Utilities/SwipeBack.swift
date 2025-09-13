@@ -6,11 +6,11 @@
 
 import SwiftUI
 
-struct SwipeBack: ViewModifier {
+public struct SwipeBack: ViewModifier {
     
     var onEnded: (DragGesture.Value) -> Void
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .overlay(alignment: .leading) {
                 Rectangle()

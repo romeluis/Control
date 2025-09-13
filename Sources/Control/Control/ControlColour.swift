@@ -7,14 +7,24 @@
 
 import SwiftUI
 
-struct ControlColour: View {
+public struct ControlColour: View {
     var title: String = "Colour"
     
     @Binding var input: Color
     
     var backgroundColour: Color = .Control.white
+
+    public init(
+        title: String = "Colour",
+        input: Binding<Color>,
+        backgroundColour: Color = .Control.white
+    ) {
+        self.title = title
+        self._input = input
+        self.backgroundColour = backgroundColour
+    }
     
-    var body: some View {
+    public var body: some View {
         VStack (alignment: .leading, spacing: 5) {
             
             if !title.isEmpty {

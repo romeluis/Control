@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ControlSearchField: View {
+public struct ControlSearchField: View {
     var title: String = ""
     
     @Binding var input: String
@@ -27,7 +27,31 @@ struct ControlSearchField: View {
     
     @State var results: [String] = []
     
-    var body: some View {
+    public init(
+        title: String = "",
+        input: Binding<String>,
+        inputState: Binding<ControlInputState>,
+        placeholderText: String = "",
+        showError: Bool = true,
+        backgroundColour: Color = .Control.white,
+        outlineColour: Color = .Control.gray1,
+        textColour: Color = .accentColor,
+        search: @escaping (String) -> [String],
+        isValid: @escaping (String, [String]) -> ControlInputState
+    ) {
+        self.title = title
+        self._input = input
+        self._inputState = inputState
+        self.placeholderText = placeholderText
+        self.showError = showError
+        self.backgroundColour = backgroundColour
+        self.outlineColour = outlineColour
+        self.textColour = textColour
+        self.search = search
+        self.isValid = isValid
+    }
+    
+    public var body: some View {
         VStack (alignment: .leading, spacing: 5) {
             
             //Title of textfield if present

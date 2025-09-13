@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ControlCompactDatePicker: View {
+public struct ControlCompactDatePicker: View {
     @Binding var input: Date
     var validStartDate: Date = .distantPast
     var validEndDate: Date = .distantFuture
@@ -27,6 +27,28 @@ struct ControlCompactDatePicker: View {
     @State private var minute: Int = 0
     
     @Namespace private var namespace
+    
+    public init(
+        input: Binding<Date>,
+        validStartDate: Date = .distantPast,
+        validEndDate: Date = .distantFuture,
+        includeDate: Bool = true,
+        includeYear: Bool = true,
+        includeTime: Bool = true,
+        backgroundColour: Color = .Control.white,
+        outlineColour: Color = .Control.gray1,
+        textColour: Color = .accentColor
+    ) {
+        self._input = input
+        self.validStartDate = validStartDate
+        self.validEndDate = validEndDate
+        self.includeDate = includeDate
+        self.includeYear = includeYear
+        self.includeTime = includeTime
+        self.backgroundColour = backgroundColour
+        self.outlineColour = outlineColour
+        self.textColour = textColour
+    }
     
     private var numberOfDaysInMonth: Int {
         let calendar = Calendar.current
@@ -206,7 +228,7 @@ struct ControlCompactDatePicker: View {
         }
     }
     
-    var body: some View {
+    public var body: some View {
             VStack {
                     HStack (spacing: 5) {
                         if includeDate {

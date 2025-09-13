@@ -7,7 +7,7 @@
 import SwiftUI
 import SwiftData
 
-struct ControlCustomGroupSelector: View {
+public struct ControlCustomGroupSelector: View {
     var title: String = ""
     
     @Binding var input: [ControlCustomSelectorObject<AnyView>]
@@ -36,7 +36,7 @@ struct ControlCustomGroupSelector: View {
         self.controlColour = controlColour
     }
 
-    var body: some View {
+    public var body: some View {
         VStack (alignment: .leading, spacing: 5) {
             //Title of selector if present
             if !title.isEmpty {
