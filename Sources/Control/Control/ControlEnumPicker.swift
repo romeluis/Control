@@ -25,11 +25,20 @@ public struct ControlEnumPicker<T>: View where T: RawRepresentable & CaseIterabl
     var isValid: ((T) -> ControlInputState)?
     var onChange: (() -> Void)?
     
+    @State private var internalString: String = ""
+    
+    private var options: [String] {
+        var ret: [String] = []
+        for item in T.allCases {
+            ret.append(item.rawValue + suffix)
+        }
+        return ret
+    }
+    
     public init(
         title: String = "",
         input: Binding<T>,
-        options: [String],
-        initialValue: String? = nil,
+        suffix: String = "",
         backgroundColour: Color = .Control.white,
         outlineColour: Color = .clear,
         textColour: Color = .accentColor,
@@ -40,8 +49,7 @@ public struct ControlEnumPicker<T>: View where T: RawRepresentable & CaseIterabl
         self.title = title
         self._input = input
         self._inputState = .constant(.valid)
-
-
+        self.suffix = suffix
         self.showError = false
         self.backgroundColour = backgroundColour
         self.outlineColour = outlineColour
@@ -54,8 +62,7 @@ public struct ControlEnumPicker<T>: View where T: RawRepresentable & CaseIterabl
         title: String = "",
         input: Binding<T>,
         inputState: Binding<ControlInputState>,
-        options: [String],
-        initialValue: String? = nil,
+        suffix: String = "",
         backgroundColour: Color = .Control.white,
         outlineColour: Color = .clear,
         textColour: Color = .accentColor,
@@ -66,6 +73,7 @@ public struct ControlEnumPicker<T>: View where T: RawRepresentable & CaseIterabl
         self.title = title
         self._input = input
         self._inputState = inputState
+        self.suffix = suffix
         self.showError = true
         self.backgroundColour = backgroundColour
         self.outlineColour = outlineColour
@@ -76,6 +84,74 @@ public struct ControlEnumPicker<T>: View where T: RawRepresentable & CaseIterabl
     }
     
     public var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Group {
+            if showError {
+                ControlStringPicker(title: title, input: $internalString, inputState: $inputState, options: options, initialValue: input.rawValue + suffix, backgroundColour: backgroundColour, outlineColour: outlineColour, textColour: textColour, validationTrigger: $validationTrigger) { value in
+                    if isValid != nil {
+                        let stripped: String = stripSuffix(value, suffix: suffix)
+                        if let converted: T = T.allCases.first(where: { $0.rawValue == stripped }) {
+                            return isValid!(converted)
+                        } else {
+                            return .invalid(message: "Unable to match value to enum")
+                        }
+                    } else {
+                        return .valid
+                    }
+                } onChange: {
+                    if onChange != nil {
+                        onChange!()
+                    }
+                }
+            } else {
+                ControlStringPicker(title: title, input: $internalString, options: options, initialValue: input.rawValue + suffix, backgroundColour: backgroundColour, outlineColour: outlineColour, textColour: textColour, onChange: onChange)
+            }
+        }
+        .onChange(of: internalString) {
+            let stripped: String = stripSuffix(internalString, suffix: suffix)
+            if let converted: T = T.allCases.first(where: { $0.rawValue == stripped }) {
+                input = converted
+            }
+        }
+        .onChange(of: input) {
+            internalString = input.rawValue + suffix
+        }
     }
+    
+    func stripSuffix(_ string: String, suffix: String) -> String {
+        guard string.hasSuffix(suffix) else { return string }
+        let range = string.index(string.endIndex, offsetBy: -suffix.count)..<string.endIndex
+        return String(string[..<range.lowerBound])
+    }
+}
+
+private enum TestEnum: String, CaseIterable, Hashable {
+    case one = "One"
+    case two = "Two"
+    case three = "Three"
+    case four = "Four"
+}
+
+#Preview (traits: .controlPreview) {
+    
+    
+    @Previewable @State var testEnum: TestEnum = .three
+    @Previewable @State var testEnum2: TestEnum = .one
+    @Previewable @State var update: Bool = false
+    @Previewable @State var state: ControlInputState = .valid
+    
+    ScrollView {
+        ControlEnumPicker(input: $testEnum, inputState: $state, validationTrigger: $update) { value in
+            if value == .three {
+                return .invalid(message: "Cannot be 3")
+            }
+            return .valid
+        }
+        ControlEnumPicker(input: $testEnum2, suffix: " minute")
+        Text(testEnum.rawValue)
+        Text(testEnum2.rawValue)
+        ControlButton(symbol: "Refresh", type: .primary) {
+            update.toggle()
+        }
+    }
+    .background(.fill)
 }
