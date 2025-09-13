@@ -6,15 +6,15 @@
 //
 import SwiftUI
 
-struct ControlPreview: PreviewModifier {
+public struct ControlPreview: PreviewModifier {
     // Runs once per preview process
-    static func makeSharedContext() async throws {
+    public static func makeSharedContext() async throws {
         CreatoDisplay.registerFonts()
     }
-    func body(content: Content, context: Void) -> some View { content }
+    public func body(content: Content, context: Void) -> some View { content }
 }
 
 
-extension PreviewTrait where T == Preview.ViewTraits {
+public extension PreviewTrait where T == Preview.ViewTraits {
     @MainActor static var controlPreview: Self = .modifier(ControlPreview())
 }
