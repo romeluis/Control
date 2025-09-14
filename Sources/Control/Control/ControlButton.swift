@@ -22,7 +22,9 @@ public enum ControlButtonType {
 }
 
 @Observable
-public final class ControlButtonObject: Identifiable {
+public final class ControlButtonObject: Identifiable, Hashable {
+    public let id: UUID = UUID()
+    
     public var text: String?
     public var symbol: String?
     
@@ -60,6 +62,15 @@ public final class ControlButtonObject: Identifiable {
         self.outlineColour = outlineColour
         self.textColour = textColour
         self.action = {}
+    }
+    
+    // MARK: - Hashable / Equatable
+    public static func == (lhs: ControlButtonObject, rhs: ControlButtonObject) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

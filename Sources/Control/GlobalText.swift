@@ -80,6 +80,10 @@ public extension View {
                     relative: Font.TextStyle) -> some View {
         modifier(CustomText(size: size, bold: bolded, scaleFactor: 1.0, relative: relative))
     }
+    
+    func titleText(scaleFactor: CGFloat = 1.0) -> some View {
+        modifier(CustomText(size: 20, bold: false, scaleFactor: scaleFactor, relative: .largeTitle))
+    }
 
     func bodyText(scaleFactor: CGFloat = 1.0) -> some View {
         modifier(CustomText(size: 16, bold: false, scaleFactor: scaleFactor, relative: .body))

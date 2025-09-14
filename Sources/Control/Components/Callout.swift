@@ -31,7 +31,7 @@ public struct Callout: View {
                 Text(title)
                     .if(bodyText != "") { content in
                         content
-                            //TODO: .headerText()
+                            .titleText()
                     }
                     .if(bodyText == "") { content in
                         content
