@@ -39,7 +39,7 @@ public final class ControlButtonObject: Identifiable, Hashable {
     
     public var action: () -> Void
     
-    init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil, action: @escaping () -> Void) {
+    public init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil, action: @escaping () -> Void) {
         self.text = text
         self.symbol = symbol
         self.type = type
@@ -51,7 +51,7 @@ public final class ControlButtonObject: Identifiable, Hashable {
         self.textColour = textColour
         self.action = action
     }
-    init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil) {
+    public init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil) {
         self.text = text
         self.symbol = symbol
         self.type = type
