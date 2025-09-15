@@ -197,40 +197,41 @@ public struct ControlButtonLabel: View {
     }
     
     var toolbar: some View {
-        HStack {
-            if object.symbol != nil {
-                if #available(iOS 26.0, *) {
-                    Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
-                        .padding(.horizontal, horizontalPadding)
-                        .padding(.vertical, verticalPadding)
-                        .glassEffect(object.backgroundColour == nil ? .regular.interactive() : .regular.tint(backgroundColourCalculated))
-                        .transition(.blurReplace)
-                } else {
-                    Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
-                        .padding(.horizontal, horizontalPadding)
-                        .padding(.vertical, verticalPadding)
-                        .background(
-                            RoundedRectangle(cornerRadius: 100)
-                                .fill(.ultraThinMaterial)
-                        )
-                        .shadow(color: .Control.black.opacity(0.2), radius: 20)
-                        .transition(.blurReplace)
-                }
-            }
-        }
-        .overlay {
+        ZStack (alignment: .topTrailing) {
             HStack {
-                Spacer()
-                VStack {
-                    if object.showIndicator {
-                        Circle()
-                            .fill(Color(object.indicatorColour ?? .accentColor))
-                            .frame(width: 10, height: 10)
-                            .transition(.scale)
+                if object.symbol != nil {
+                    if #available(iOS 26.0, *) {
+                        Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
+                            .padding(.horizontal, horizontalPadding)
+                            .padding(.vertical, verticalPadding)
+                            .glassEffect(object.backgroundColour == nil ? .regular.interactive() : .regular.tint(backgroundColourCalculated))
+                            .transition(.blurReplace)
+                    } else {
+                        Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
+                            .padding(.horizontal, horizontalPadding)
+                            .padding(.vertical, verticalPadding)
+                            .background(
+                                RoundedRectangle(cornerRadius: 100)
+                                    .fill(.ultraThinMaterial)
+                            )
+                            .shadow(color: .Control.black.opacity(0.2), radius: 20)
+                            .transition(.blurReplace)
                     }
-                    Spacer()
                 }
             }
+            
+            Group {
+                if object.showIndicator {
+                    HStack (alignment: .top) {
+                        VStack (alignment: .trailing) {
+                            Circle()
+                                .fill(Color(object.indicatorColour ?? .accentColor))
+                                .frame(width: 10, height: 10)
+                        }
+                    }
+                }
+            }
+            .transition(.scale)
         }
     }
 }

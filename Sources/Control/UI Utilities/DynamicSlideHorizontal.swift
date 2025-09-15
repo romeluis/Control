@@ -37,3 +37,27 @@ public extension AnyTransition {
         )
     }
 }
+
+#Preview (traits: .controlPreview) {
+    @Previewable @State var state: Bool = true
+    @Previewable @State var forward: Bool = true
+    
+    Group {
+        if state {
+            ScrollView {
+                ControlButton(text: "Next", type: .primary) {
+                    forward = true
+                    state = false
+                }
+            }
+        } else {
+            ScrollView {
+                ControlButton(text: "Back", type: .primary) {
+                    forward = false
+                    state = true
+                }
+            }
+        }
+    }
+    .transition(.dynamicSlideHorizontal(forward: $forward))
+}
