@@ -32,35 +32,41 @@ public final class ControlButtonObject: Identifiable, Hashable {
     public var symbolLocation: ControlButtonSymbolLocation = .leading
     public var buttonLocation: Alignment = .center
     public var expandWidth: Bool = false
+    public var showIndicator: Bool = false
     
     public var backgroundColour: Color? = nil
     public var outlineColour: Color? = nil
     public var textColour: Color? = nil
+    public var indicatorColour: Color? = nil
     
     public var action: () -> Void
     
-    public init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil, action: @escaping () -> Void) {
+    public init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, showIndicator: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil, indicatorColour: Color? = nil, action: @escaping () -> Void) {
         self.text = text
         self.symbol = symbol
         self.type = type
         self.symbolLocation = symbolLocation
         self.buttonLocation = buttonLocation
         self.expandWidth = expandWidth
+        self.showIndicator = showIndicator
         self.backgroundColour = backgroundColour
         self.outlineColour = outlineColour
         self.textColour = textColour
+        self.indicatorColour = indicatorColour
         self.action = action
     }
-    public init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil) {
+    public init(text: String? = nil, symbol: String? = nil, type: ControlButtonType, symbolLocation: ControlButtonSymbolLocation = .leading, buttonLocation: Alignment = .center, expandWidth: Bool = false, showIndicator: Bool = false, backgroundColour: Color? = nil, outlineColour: Color? = nil, textColour: Color? = nil, indicatorColour: Color? = nil) {
         self.text = text
         self.symbol = symbol
         self.type = type
         self.symbolLocation = symbolLocation
         self.buttonLocation = buttonLocation
         self.expandWidth = expandWidth
+        self.showIndicator = showIndicator
         self.backgroundColour = backgroundColour
         self.outlineColour = outlineColour
         self.textColour = textColour
+        self.indicatorColour = indicatorColour
         self.action = {}
     }
     

@@ -218,17 +218,34 @@ public struct ControlButtonLabel: View {
                 }
             }
         }
+        .overlay {
+            HStack {
+                Spacer()
+                VStack {
+                    if object.showIndicator {
+                        Circle()
+                            .fill(Color(object.indicatorColour ?? .accentColor))
+                            .frame(width: 10, height: 10)
+                            .transition(.scale)
+                    }
+                    Spacer()
+                }
+            }
+        }
     }
 }
 
 #Preview (traits: .controlPreview){
     @Previewable @State var bool: Bool = false
+    @Previewable @State var obj: ControlButtonObject = .init(symbol: "Cog", type: .toolbar, showIndicator: true, indicatorColour: .Control.orange) {
+        
+    }
     VStack {
         ControlButton(text: "Hello", symbol: "Question", type: .primary, symbolLocation: .leading, expandWidth: false) {
-            
+            obj.indicatorColour = .red
         }
         ControlButton(symbol: "Question", type: .primary, symbolLocation: .leading, expandWidth: false) {
-            
+            obj.indicatorColour = .green
         }
         .disabled(bool)
         ControlButton(text: "Hello", symbol: "Question", type: .secondary, symbolLocation: .leading, expandWidth: false) {
@@ -255,7 +272,6 @@ public struct ControlButtonLabel: View {
             
         }
         ControlButton(symbol: "Question", type: .mini, symbolLocation: .leading, expandWidth: false, outlineColour: .Control.white) {
-            
         }
         .disabled(bool)
         ControlButton(text: "Hello", symbol: "Question", type: .toolbar, symbolLocation: .trailing, expandWidth: false) {
@@ -263,7 +279,10 @@ public struct ControlButtonLabel: View {
         }
         ControlButton(text: "Hello", symbol: "Question", type: .toolbar, symbolLocation: .trailing, expandWidth: false, backgroundColour: .accentColor, textColour: .Control.white) {
             bool.toggle()
+            obj.showIndicator.toggle()
         }
+        
+        ControlButton(obj)
         
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
