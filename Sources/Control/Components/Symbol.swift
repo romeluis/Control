@@ -10,6 +10,8 @@ import SwiftUI
 @Observable
 public final class SymbolObject: Identifiable {
     public var symbol: String
+    public var systemName: String
+    public var customSymbol: String
     public var size: CGFloat
     public var colour: Color = .Control.black
     
@@ -17,6 +19,27 @@ public final class SymbolObject: Identifiable {
         self.symbol = symbol
         self.size = size
         self.colour = colour
+        
+        self.systemName = ""
+        self.customSymbol = ""
+    }
+    
+    public init(systemName: String, size: CGFloat, colour: Color) {
+        self.symbol = ""
+        self.size = size
+        self.colour = colour
+        
+        self.systemName = systemName
+        self.customSymbol = ""
+    }
+    
+    public init(customSymbol: String, size: CGFloat, colour: Color) {
+        self.symbol = ""
+        self.size = size
+        self.colour = colour
+        
+        self.systemName = ""
+        self.customSymbol = customSymbol
     }
 }
 
@@ -31,11 +54,25 @@ public struct Symbol: View {
     }
     
     public var body: some View {
-        Image(object.symbol + " Symbol", bundle: .module)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: object.size)
-            .foregroundColor(object.colour)
+        if !object.symbol.isEmpty {
+            Image(object.symbol + " Symbol", bundle: .module)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: object.size)
+                .foregroundColor(object.colour)
+        } else if !object.customSymbol.isEmpty {
+            Image(object.symbol + " Symbol", bundle: .main)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: object.size)
+                .foregroundColor(object.colour)
+        } else if !object.customSymbol.isEmpty {
+            Image(object.symbol + " Symbol", bundle: .main)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: object.size)
+                .foregroundColor(object.colour)
+        }
     }
 }
 

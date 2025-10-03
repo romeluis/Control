@@ -7,6 +7,7 @@
 
 import Foundation
 import MathParser
+import MapKit
 
 public extension Date {
     func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
@@ -31,6 +32,23 @@ public func format(percent: Double, minimumDigits: Int = 0, maximumDigits: Int =
         // Use the formatter to convert the number; fall back if something goes wrong
         return formatter.string(from: NSNumber(value: number)) ?? "\(number)"
     }
+}
+
+public func format(distance meters: CLLocationDistance) -> String { //MOVE TO CONTROL
+    if meters < 1000 {
+        return String(format: "%.0f m", meters)
+    } else {
+        return String(format: "%.1f km", meters / 1000)
+    }
+}
+
+extension BinaryInteger {
+    var degreesToRadians: CGFloat { CGFloat(self) * .pi / 180 }
+}
+
+extension FloatingPoint {
+    var degreesToRadians: Self { self * .pi / 180 }
+    var radiansToDegrees: Self { self * 180 / .pi }
 }
 
 public enum DoubleError: String, Error {
