@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Tag: View {
+public struct Tag: View {
     //Inputs
     var text: String
     var colour: Color
