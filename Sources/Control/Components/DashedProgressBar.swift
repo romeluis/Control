@@ -10,13 +10,12 @@ public struct DashedProgressBar: View {
     
     @State private var animatedCompletion: Double = 0 // State for animating completion
 	
-	public init(segments: Int, totalCompletion: Double, sectionStatus: [Bool], progressTint: Color, completionTint: Color, animatedCompletion: Double) {
+	public init(segments: Int, totalCompletion: Double, sectionStatus: [Bool], progressTint: Color, completionTint: Color) {
 		self.segments = segments
 		self.totalCompletion = totalCompletion
 		self.sectionStatus = sectionStatus
 		self.progressTint = progressTint
 		self.completionTint = completionTint
-		self.animatedCompletion = animatedCompletion
 	}
     
     public var body: some View {
