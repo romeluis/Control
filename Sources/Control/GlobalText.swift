@@ -81,6 +81,9 @@ public extension View {
         modifier(CustomText(size: size, bold: bolded, scaleFactor: 1.0, relative: relative))
     }
     
+	func focusText(scaleFactor: CGFloat = 1.0) -> some View {
+		modifier(CustomText(size: 30, bold: true, scaleFactor: scaleFactor, relative: .largeTitle))
+	}
     func titleText(scaleFactor: CGFloat = 1.0) -> some View {
         modifier(CustomText(size: 20, bold: false, scaleFactor: scaleFactor, relative: .largeTitle))
     }
