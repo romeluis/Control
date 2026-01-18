@@ -5,12 +5,12 @@ public struct DashedProgressBar: View {
     var totalCompletion: Double
     var sectionStatus: [Bool]
     
-    var progressTint: String
-    var completionTint: String
+    var progressTint: Color
+    var completionTint: Color
     
     @State private var animatedCompletion: Double = 0 // State for animating completion
 	
-	public init(segments: Int, totalCompletion: Double, sectionStatus: [Bool], progressTint: String, completionTint: String, animatedCompletion: Double) {
+	public init(segments: Int, totalCompletion: Double, sectionStatus: [Bool], progressTint: Color, completionTint: Color, animatedCompletion: Double) {
 		self.segments = segments
 		self.totalCompletion = totalCompletion
 		self.sectionStatus = sectionStatus
@@ -32,7 +32,7 @@ public struct DashedProgressBar: View {
                     ForEach(0..<segments, id: \.self) { _ in
                         RoundedRectangle(cornerRadius: 4)
                             .frame(width: dashWidth, height: 8)
-                            .foregroundColor(Color(completionTint))
+                            .foregroundColor(completionTint)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -40,7 +40,7 @@ public struct DashedProgressBar: View {
                 // Foreground progress line clipped by dashes
                 LineShape()
                     .trim(from: 0, to: animatedCompletion) // Animate this trim
-                    .stroke(Color(progressTint), lineWidth: 8)
+                    .stroke(progressTint, lineWidth: 8)
                     .clipShape(DashedClipShape(segments: segments, spacing: spacing, dashWidth: dashWidth)) // Apply dashes as clip
                 
                 // Alert symbols
@@ -94,8 +94,4 @@ struct DashedClipShape: Shape {
         
         return path
     }
-}
-
-#Preview (traits: .previewData){
-    MasterView()
 }
