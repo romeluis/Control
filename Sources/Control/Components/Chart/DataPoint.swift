@@ -12,4 +12,10 @@ public struct DataPoint {
     var y: Double
     
     var colour: Color
+	
+	public init(x: Double, y: Double, colour: Color) {
+		self.x = x
+		self.y = y
+		self.colour = colour
+	}
 }

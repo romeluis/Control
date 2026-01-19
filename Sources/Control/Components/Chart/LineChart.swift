@@ -11,4 +11,11 @@ public struct LineChart {
     var title: String
     var xAxisLabels: [String]
     var yAxisLabels: [String]
+	
+	public init(dataPoints: [DataPoint], title: String, xAxisLabels: [String], yAxisLabels: [String]) {
+		self.dataPoints = dataPoints
+		self.title = title
+		self.xAxisLabels = xAxisLabels
+		self.yAxisLabels = yAxisLabels
+	}
 }
