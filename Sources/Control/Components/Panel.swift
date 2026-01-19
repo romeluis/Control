@@ -17,7 +17,7 @@ public struct Panel<Content: View>: View {
     
     @ViewBuilder var content: Content
     
-    init(title: String, actionIcon: String? = nil, foregroundColour: Color, backgroundColour: Color, action: @escaping () -> Void, content: Content) {
+    public init(title: String, actionIcon: String? = nil, foregroundColour: Color, backgroundColour: Color, action: @escaping () -> Void, content: Content) {
         self.title = title
         self.actionIcon = actionIcon
         self.foregroundColour = foregroundColour
