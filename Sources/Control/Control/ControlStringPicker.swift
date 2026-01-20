@@ -12,7 +12,7 @@ public struct ControlStringPicker: View {
     
     @Binding var input: String
     @Binding var inputState: ControlInputState
-    var options: [String]
+    @Binding var options: [String]
     
     var initialValue: String? = nil
     var showError: Bool = true
@@ -31,7 +31,7 @@ public struct ControlStringPicker: View {
     public init(
         title: String = "",
         input: Binding<String>,
-        options: [String],
+        options: Binding<[String]>,
         initialValue: String? = nil,
         backgroundColour: Color = .Control.white,
         outlineColour: Color = .clear,
@@ -43,7 +43,7 @@ public struct ControlStringPicker: View {
         self.title = title
         self._input = input
         self._inputState = .constant(.valid)
-        self.options = options
+        self._options = options
         self.initialValue = initialValue
         self.showError = false
         self.backgroundColour = backgroundColour
@@ -57,7 +57,7 @@ public struct ControlStringPicker: View {
         title: String = "",
         input: Binding<String>,
         inputState: Binding<ControlInputState>,
-        options: [String],
+        options: Binding<[String]>,
         initialValue: String? = nil,
         backgroundColour: Color = .Control.white,
         outlineColour: Color = .clear,
@@ -69,7 +69,7 @@ public struct ControlStringPicker: View {
         self.title = title
         self._input = input
         self._inputState = inputState
-        self.options = options
+        self._options = options
         self.initialValue = initialValue
         self.showError = true
         self.backgroundColour = backgroundColour
@@ -166,16 +166,16 @@ public struct ControlStringPicker: View {
     @Previewable @State var state: ControlInputState = .valid
     @Previewable @State var stateOne: ControlInputState = .valid
     @Previewable @State var update: Bool = false
-    let selections: [String] = ["1", "2"]
+    @Previewable @State var selections: [String] = ["1", "2"]
     
-    ControlStringPicker(input: $text, inputState: $stateOne, options: selections, validationTrigger: $update) { value in
+    ControlStringPicker(input: $text, inputState: $stateOne, options: $selections, validationTrigger: $update) { value in
         if value == "1" {
             return .invalid(message: "Cannot be 1")
         }
         return .valid
     }
     
-    ControlStringPicker(input: $textOne, inputState: $state, options: selections, initialValue: "Select a number", validationTrigger: $update) { value in
+    ControlStringPicker(input: $textOne, inputState: $state, options: $selections, initialValue: "Select a number", validationTrigger: $update) { value in
         if selections.contains(value) == false {
             return .invalid(message: "Must select an option")
         }
