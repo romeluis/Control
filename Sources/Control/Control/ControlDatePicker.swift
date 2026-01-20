@@ -29,7 +29,8 @@ public struct ControlDatePicker: View {
     @State private var year: Int = 0
     @State private var hour: Int = 0
     @State private var minute: Int = 0
-    
+    @State private var isInitializing: Bool = true
+
     @Namespace private var namespace
     
     public init(
@@ -209,6 +210,7 @@ public struct ControlDatePicker: View {
             if year < allowedYears.lowerBound { year = allowedYears.lowerBound }
             if year > allowedYears.upperBound { year = allowedYears.upperBound }
         } else {
+            // Don't modify year when includeYear is false - preserve original
             year = input.get(.year)
         }
         // Month (0...11)
@@ -415,10 +417,13 @@ public struct ControlDatePicker: View {
                 }
             }
             .onChange(of: day + month + year + hour + minute) {
+                // Skip updates during initialization to prevent unwanted writes
+                guard !isInitializing else { return }
                 clampSelectionsToBounds()
                 updateInput()
             }
             .onAppear {
+                isInitializing = true
                 // Initialize state from the current input date
                 if includeDate {
                     day = input.get(.day)
@@ -434,6 +439,8 @@ public struct ControlDatePicker: View {
                 }
                 // Clamp initial selections to bounds
                 clampSelectionsToBounds()
+                // Initialization complete - now allow updates
+                isInitializing = false
             }
         }
     }
