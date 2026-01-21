@@ -54,8 +54,8 @@ public struct ControlCompactTextField: View {
                     .padding(6)
                     .padding(.horizontal)
                     .foregroundColor(textColour)
-                    .backgroundStroke(cornerRadius: 20, colour: inputState != .valid && showError  ? .red : outlineColour)
-                    .backgroundFill(cornerRadius: 20, colour: backgroundColour)
+                    .backgroundStroke(cornerRadius: 10, colour: inputState != .valid && showError  ? .red : outlineColour)
+                    .backgroundFill(cornerRadius: 10, colour: backgroundColour)
             }
             
             //Error message if input is invalid
