@@ -19,6 +19,7 @@ public enum ControlButtonType {
     case mini
     case capsule
     case toolbar
+	case navigation
 }
 
 @Observable

@@ -33,7 +33,7 @@ public struct ControlButtonLabel: View {
             return .clear
         case .mini:
             return .clear
-        case .capsule:
+		case .capsule, .navigation:
             return .Control.white
         case .toolbar:
             return .clear
@@ -59,7 +59,7 @@ public struct ControlButtonLabel: View {
             return .Control.black
         case .mini:
             return .Control.black
-        case .capsule:
+		case .capsule, .navigation:
             return .Control.black
         case .toolbar:
             return .Control.black
@@ -76,7 +76,7 @@ public struct ControlButtonLabel: View {
             return 22
         case .accessory:
             return 15
-        case .capsule:
+		case .capsule, .navigation:
             return 20
         case .mini:
             return 10
@@ -87,7 +87,7 @@ public struct ControlButtonLabel: View {
         switch object.type {
         case .primary:
             return 20
-        case .secondary:
+		case .secondary, .navigation:
             return 20
         case .toolbar:
             return 100
@@ -104,7 +104,7 @@ public struct ControlButtonLabel: View {
         switch object.type {
         case .primary:
             return object.text == nil ? 14 : 20
-        case .secondary:
+		case .secondary, .navigation:
             return object.text == nil ? 14 : 20
         case .toolbar:
             return 10
@@ -121,7 +121,7 @@ public struct ControlButtonLabel: View {
         switch object.type {
         case .primary:
             return object.text == nil ? 12 : 15
-        case .secondary:
+		case .secondary, .navigation:
             return object.text == nil ? 12 : 15
         case .toolbar:
             return 10
@@ -138,7 +138,7 @@ public struct ControlButtonLabel: View {
         switch object.type {
         case .primary:
             return 7
-        case .secondary:
+		case .secondary, .navigation:
             return 7
         case .toolbar:
             return 4
@@ -156,6 +156,8 @@ public struct ControlButtonLabel: View {
             switch object.type {
             case .toolbar:
                 toolbar
+			case .navigation:
+				navigation
             default:
                 generic
             }
@@ -195,6 +197,38 @@ public struct ControlButtonLabel: View {
         .backgroundStroke(cornerRadius: cornerRadius, colour: outlineColourCalculated)
         .backgroundFill(cornerRadius: cornerRadius, colour: backgroundColourCalculated)
     }
+	
+	var navigation: some View {
+		HStack (spacing: spacing) {
+			if object.symbolLocation == .leading && object.symbol != nil {
+				Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
+			}
+			
+			if object.text != nil {
+				Text(object.text!)
+					.if(object.type == .primary || object.type == .secondary || object.type == .accessory) { content in
+						content
+							.bodyText()
+					}
+					.if(object.type == .mini) { content in
+						content
+							.smallText()
+					}
+					.foregroundColor(textColourCalculated)
+			}
+			Spacer()
+			if object.symbolLocation == .trailing && object.symbol != nil {
+				Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
+			}
+			
+			Symbol(symbol: "Toggle Arrow", size: symbolSize, colour: textColourCalculated)
+		}
+		.padding(.horizontal, horizontalPadding)
+		.padding(.vertical, verticalPadding)
+		.frame(maxWidth: object.expandWidth ? .infinity : nil)
+		.backgroundStroke(cornerRadius: cornerRadius, colour: outlineColourCalculated)
+		.backgroundFill(cornerRadius: cornerRadius, colour: backgroundColourCalculated)
+	}
     
     var toolbar: some View {
         ZStack (alignment: .topTrailing) {
