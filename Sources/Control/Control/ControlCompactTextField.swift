@@ -51,7 +51,7 @@ public struct ControlCompactTextField: View {
             HStack (spacing: 15) {
                 TextField(placeholderText, text: $input)
                     .smallText()
-                    .padding(6)
+                    .padding()
                     .padding(.horizontal)
                     .foregroundColor(textColour)
                     .backgroundStroke(cornerRadius: 10, colour: inputState != .valid && showError  ? .red : outlineColour)
