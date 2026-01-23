@@ -56,12 +56,12 @@ public struct DashedProgressBar: View {
         }
         .frame(height: 20) // Fixed height for the progress bar
         .onAppear {
-            withAnimation(.easeOut(duration: 1)) {
+            withAnimation(.spring(duration: 0.7)) {
                 animatedCompletion = totalCompletion
             }
         }
         .onChange(of: totalCompletion) {
-            withAnimation(.easeOut(duration: 1)) {
+            withAnimation(.spring(duration: 0.7)) {
                 animatedCompletion = totalCompletion
             }
         }
