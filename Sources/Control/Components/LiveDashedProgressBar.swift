@@ -60,5 +60,10 @@ public struct LiveDashedProgressBar: View {
                 animatedCompletion = totalCompletion
             }
         }
+        .onChange(of: totalCompletion) {
+            withAnimation(.easeOut(duration: 1)) {
+                animatedCompletion = totalCompletion
+            }
+        }
     }
 }
