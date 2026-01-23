@@ -86,9 +86,9 @@ public struct ControlButtonLabel: View {
     private var cornerRadius: CGFloat {
         switch object.type {
         case .primary:
-            return 20
+            return 100
 		case .secondary, .navigation:
-            return 20
+            return 100
         case .toolbar:
             return 100
         case .accessory:
