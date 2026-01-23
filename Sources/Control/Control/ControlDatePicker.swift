@@ -408,6 +408,7 @@ public struct ControlDatePicker: View {
             }
             .padding(.horizontal)
             .padding(.vertical, editView ? 10 : 15)
+            .backgroundStroke(cornerRadius: 20, colour: outlineColour)
             .backgroundFill(cornerRadius: 20, colour: backgroundColour)
             .onTapGesture {
                 if !editView {
