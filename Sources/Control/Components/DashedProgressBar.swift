@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct DashedProgressBar: View {
     let segments: Int
-    var totalCompletion: Double
+    @Binding var totalCompletion: Double
     var sectionStatus: [Bool]
     
     var progressTint: Color
@@ -10,9 +10,9 @@ public struct DashedProgressBar: View {
     
     @State private var animatedCompletion: Double = 0 // State for animating completion
 	
-	public init(segments: Int, totalCompletion: Double, sectionStatus: [Bool], progressTint: Color, completionTint: Color) {
+	public init(segments: Int, totalCompletion: Binding<Double>, sectionStatus: [Bool], progressTint: Color, completionTint: Color) {
 		self.segments = segments
-		self.totalCompletion = totalCompletion
+		self._totalCompletion = totalCompletion
 		self.sectionStatus = sectionStatus
 		self.progressTint = progressTint
 		self.completionTint = completionTint
