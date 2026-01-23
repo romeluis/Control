@@ -185,6 +185,7 @@ public struct ControlButtonLabel: View {
                             .smallText()
                     }
                     .foregroundColor(textColourCalculated)
+                
             }
             
             if object.symbolLocation == .trailing && object.symbol != nil {
@@ -215,6 +216,7 @@ public struct ControlButtonLabel: View {
 							.smallText()
 					}
 					.foregroundColor(textColourCalculated)
+                    .multilineTextAlignment(.leading)
 			}
 			Spacer()
 			if object.symbolLocation == .trailing && object.symbol != nil {
