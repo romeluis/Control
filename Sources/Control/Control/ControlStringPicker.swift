@@ -102,6 +102,7 @@ public struct ControlStringPicker: View {
                     Text(input)
                         .bodyText()
                         .foregroundColor(textColour)
+                        .multilineTextAlignment(.leading)
                     Spacer()
                     Circle()
                         .fill(textColour)
