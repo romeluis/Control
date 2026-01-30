@@ -61,8 +61,8 @@ public struct ControlToggle: View {
                     .padding(.vertical, -4)
             }
             .padding()
-            .backgroundFill(cornerRadius: 20, colour: containerColour)
             .backgroundStroke(cornerRadius: 20, colour: outlineColour)
+            .backgroundFill(cornerRadius: 20, colour: containerColour)
             .animation(.spring(duration: 0.5), value: input)
         }
     }
