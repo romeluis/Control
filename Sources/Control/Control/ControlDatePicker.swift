@@ -479,7 +479,7 @@ public struct ControlDatePicker: View {
         }
         
         // Preserve seconds if present, otherwise default to 0
-        comps.second = input.get(.second)
+        comps.second = 0
         
         // Attempt to build a date
         let newDate = calendar.date(from: comps) ?? input
