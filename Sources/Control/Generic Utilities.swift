@@ -61,8 +61,8 @@ public func sanitizeDouble(input: String) throws -> Double {
     
     // First, try a direct conversion.
     if let direct = Double(trimmed) {
-        // If the number is more than 1, treat it as a percentage (0-100)
-        if direct > 1 {
+        // If the number is 1 or more, treat it as a percentage (0-100)
+        if direct >= 1 {
             if direct > 100 || direct < 0 {
                 throw DoubleError.outOfBounds
             }
@@ -76,7 +76,7 @@ public func sanitizeDouble(input: String) throws -> Double {
     // If direct conversion didn't work, try evaluating as a math expression (e.g., "13/15")
     do {
         let evaluated = try trimmed.evaluate()
-        if evaluated > 1 {
+        if evaluated >= 1 {
             if evaluated > 100 || evaluated < 0 {
                 throw DoubleError.outOfBounds
             }
