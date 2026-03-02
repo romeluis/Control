@@ -248,7 +248,14 @@ public struct ControlButtonLabel: View {
                             .padding(.vertical, verticalPadding)
                             .background(
                                 RoundedRectangle(cornerRadius: 100)
-                                    .fill(.ultraThinMaterial)
+                                    .if(object.backgroundColour == nil) { content in
+                                        content
+                                            .fill(.ultraThinMaterial)
+                                    }
+                                    .if(object.backgroundColour != nil) { content in
+                                        content
+                                            .foregroundColor(backgroundColourCalculated)
+                                    }
                             )
                             .shadow(color: .Control.black.opacity(0.2), radius: 20)
                             .transition(.blurReplace)
