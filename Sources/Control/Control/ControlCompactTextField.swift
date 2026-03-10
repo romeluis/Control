@@ -20,6 +20,10 @@ public struct ControlCompactTextField: View {
 
     @Binding var validationTrigger: Bool
 
+    var onFocusLost: (() -> Void)?
+
+    @FocusState private var isFocused: Bool
+
     var isValid: ((String) -> ControlInputState)?
 
     public init(
@@ -31,6 +35,7 @@ public struct ControlCompactTextField: View {
         outlineColour: Color = .clear,
         textColour: Color = .accentColor,
         validationTrigger: Binding<Bool> = .constant(true),
+        onFocusLost: (() -> Void)? = nil,
         isValid: ((String) -> ControlInputState)? = nil
     ) {
         self._input = input
@@ -41,6 +46,7 @@ public struct ControlCompactTextField: View {
         self.outlineColour = outlineColour
         self.textColour = textColour
         self._validationTrigger = validationTrigger
+        self.onFocusLost = onFocusLost
         self.isValid = isValid
     }
 
@@ -50,6 +56,7 @@ public struct ControlCompactTextField: View {
             //Textfield
             HStack (spacing: 15) {
                 TextField(placeholderText, text: $input)
+                    .focused($isFocused)
                     .smallText()
                     .padding(.vertical, 6)
                     .padding(.horizontal, 12)
@@ -71,6 +78,11 @@ public struct ControlCompactTextField: View {
         }
         .onChange(of: validationTrigger) {
             self.updateInputs()
+        }
+        .onChange(of: isFocused) {
+            if !isFocused {
+                onFocusLost?()
+            }
         }
     }
 
