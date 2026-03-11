@@ -57,17 +57,7 @@ public struct ControlCompactTextField: View {
             HStack (spacing: 15) {
                 TextField(placeholderText, text: $input)
                     .focused($isFocused)
-                    .toolbar {
-                        // Place toolbar items specifically above the keyboard
-                        ToolbarItemGroup(placement: .keyboard) {
-                            Spacer() // Pushes button to the right
-                            ControlButton(symbol: "Check Mark", type: .toolbar, backgroundColour: .Control.orange) {
-                                withAnimation(.spring(duration: 0.3)) {
-                                    isFocused = false
-                                }
-                            }
-                        }
-                    }
+                    .submitLabel(.done)
                     .smallText()
                     .padding(.vertical, 6)
                     .padding(.horizontal, 12)
