@@ -240,7 +240,7 @@ public struct ControlButtonLabel: View {
                         Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
                             .padding(.horizontal, horizontalPadding)
                             .padding(.vertical, verticalPadding)
-                            .glassEffect(object.backgroundColour == nil ? .regular.interactive() : .regular.tint(backgroundColourCalculated))
+                            .glassEffect(object.backgroundColour == nil ? .clear.interactive() : .clear.tint(backgroundColourCalculated))
                             .transition(.blurReplace)
                     } else {
                         Symbol(symbol: object.symbol!, size: symbolSize, colour: textColourCalculated)
