@@ -77,8 +77,9 @@ struct CustomText: ViewModifier {
 public extension View {
     func customText(_ size: CGFloat,
                     bolded: Bool = false,
+                    scaleFactor: CGFloat = 1.0,
                     relative: Font.TextStyle) -> some View {
-        modifier(CustomText(size: size, bold: bolded, scaleFactor: 1.0, relative: relative))
+        modifier(CustomText(size: size, bold: bolded, scaleFactor: scaleFactor, relative: relative))
     }
     
 	func focusText(scaleFactor: CGFloat = 1.0) -> some View {
