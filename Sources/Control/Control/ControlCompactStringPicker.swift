@@ -47,16 +47,29 @@ public struct ControlCompactStringPicker: View {
                     }
                 }
             } label: {
-                //Picker style
-                HStack {
-                    Text(input)
-                        .bodyText()
-                        .foregroundColor(textColour)
-                }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .backgroundStroke(cornerRadius: 10, colour: outlineColour)
-                .backgroundFill(cornerRadius: 10, colour: backgroundColour)
+				if #available(iOS 26.0, *) {
+					HStack {
+						Text(input)
+							.bodyText()
+							.foregroundColor(textColour)
+						
+						Symbol(symbol: "Toggle Arrow Down", size: 10, colour: textColour)
+					}
+					.padding(.horizontal, 10)
+					.padding(.vertical, 5)
+					.glassEffect(.clear)
+				} else {
+					//Picker style
+					HStack {
+						Text(input)
+							.bodyText()
+							.foregroundColor(textColour)
+					}
+					.padding(.horizontal, 10)
+					.padding(.vertical, 5)
+					.backgroundStroke(cornerRadius: 10, colour: outlineColour)
+					.backgroundFill(cornerRadius: 10, colour: backgroundColour)
+				}
             }
             //Set initial value on appear
             .onAppear() {
@@ -85,8 +98,11 @@ public struct ControlCompactStringPicker: View {
     @Previewable @State var stateOne: ControlInputState = .valid
     @Previewable @State var update: Bool = false
     let selections: [String] = ["1", "2"]
-    
-    ControlCompactStringPicker(input: $text, options: selections)
-    
-    ControlCompactStringPicker(input: $textOne, options: selections, initialValue: "Select a number")
+	VStack {
+		ControlCompactStringPicker(input: $text, options: selections)
+		
+		ControlCompactStringPicker(input: $textOne, options: selections, initialValue: "Select a number")
+	}
+	.frame(maxWidth: .infinity, maxHeight: .infinity)
+	.background(.fill)
 }
